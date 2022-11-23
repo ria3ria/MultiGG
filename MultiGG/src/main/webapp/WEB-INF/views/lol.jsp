@@ -47,12 +47,12 @@ body{
 }
 #board_top{
     width:100%;
-    height:20%;
+    height:15%;
     background-color: hotpink;
 }
 #board_bottom{
     width:100%;
-    height:80%;
+    height:85%;
     background-color: aqua;
 }
 </style>
