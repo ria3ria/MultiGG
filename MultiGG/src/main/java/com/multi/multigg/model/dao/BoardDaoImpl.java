@@ -83,4 +83,18 @@ public class BoardDaoImpl implements BoardDao {
 		}
 		return res;
 	}
+
+	@Override
+	public List<BoardDto> searchList(String keyword) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		
+		try {
+			list = sqlSession.selectList(NAMESPACE+"searchList", keyword);
+		} catch (Exception e) {
+			System.out.println("[error] : search list");
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
 }
