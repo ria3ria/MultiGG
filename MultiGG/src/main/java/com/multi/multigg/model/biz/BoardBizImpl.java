@@ -40,4 +40,9 @@ public class BoardBizImpl implements BoardBiz {
 		return dao.delete(boardno);
 	}
 
+	@Override
+	public List<BoardDto> searchList(String keyword) {
+		return dao.searchList(keyword);
+	}
+
 }

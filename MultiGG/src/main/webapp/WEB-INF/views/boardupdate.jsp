@@ -8,23 +8,19 @@
 </head>
 <body>
 	<h1>UPDATE</h1>
-	<form action="updateres.do" method="post">
-		<input type="hidden" name="myno" value="${dto.boardno }">
+	<form action="boardupdate.do" method="post">
+		<input type="hidden" name="boardno" value="${dto.boardno }">
 		<table border="1">
 			<tr>
-				<th>WRITER</th>
-				<td>${dto.boardname }</td>
-			</tr>
-			<tr>
 				<th>TITLE</th>
-				<td><input type="text" value="${dto.boardtitle }" name="mytitle">
+				<td><input type="text" name="boardtitle" value="${dto.boardtitle }"></td>
 			</tr>
 			<tr>
 				<th>CONTENT</th>
-				<td><textarea rows="10" cols="40" name="mycontent">${dto.boardcontent }</textarea></td>
+				<td><textarea name="boardcontent">${dto.boardcontent }</textarea></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="right">
+				<td colspan="2">
 					<input type="submit" value="완료">
 					<input type="button" value="취소" onclick="location.href='lol.do'">
 					<input type="button" value="삭제" onclick="location.href='boarddelete.do?boardno=${dto.boardno}'">
