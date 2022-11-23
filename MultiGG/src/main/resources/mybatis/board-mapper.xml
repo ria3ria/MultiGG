@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="board">
+		<select id="selectList" resultType="boardDto">
+			SELECT * FROM LOLBOARD ORDER BY BOARDNO DESC
+		</select>
+		<select id="selectOne" parameterType="int" resultType="boardDto">
+			SELECT * FROM LOLBOARD WHERE BOARDNO= #{boardno}
+		</select>
+		<insert id="insert" parameterType="boardDto">
+			INSERT INTO LOLBOARD VALUES(#{boardkategorie}, NULL, #{boardname}, #{boardtitle}, #{boardcontent}, NOW())
+		</insert>
+		<update id="update" parameterType="boardDto">
+			UPDATE LOLBOARD SET BOARDTITLE=#{boardtitle}, BOARDCONTENT=#{boardcontent} WHERE BOARDNO=#{boardno}
+		</update>
+		<delete id="delete" parameterType="int">
+			DELETE FROM LOLBOARD WHERE BOARDNO=#{boardno}
+		</delete>
+</mapper>

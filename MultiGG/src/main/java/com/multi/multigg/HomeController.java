@@ -1,0 +1,78 @@
+package com.multi.multigg;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.multi.multigg.model.biz.BoardBiz;
+import com.multi.multigg.model.dto.BoardDto;
+
+@Controller
+public class HomeController {
+	
+	@Autowired
+	private BoardBiz biz;
+	
+	@RequestMapping("/main.do")
+	public String main() {
+		return "main";
+	}
+	
+	@RequestMapping("/lol.do")
+	public String lol(Model model) {
+		model.addAttribute("list", biz.selectList());
+		return "lol";
+	}
+	
+	@RequestMapping("/login.do")
+	public String login() {
+		return "login";
+	}
+	
+	@RequestMapping("/boardwriteform.do")
+	public String boardWriteForm() {
+		return "boardwriteform";
+	}
+	
+	@RequestMapping("/boardupdateform.do")
+	public String boardUpdateForm(Model model, int boardno) {
+		model.addAttribute("dto", biz.selectOne(boardno));
+		return "boarduptate";
+	}
+	
+	@RequestMapping("/boardwrite.do")
+	public String boardWrite(BoardDto dto) {
+		int res = biz.insert(dto);
+		
+		if(res>0) {
+			return "redirect:lol.do";
+		}
+		else {
+			return "redirect:boardwriteform.do";
+		}
+	}
+	
+	@RequestMapping("/boarddetail.do")
+	public String boardDetail(Model model, int boardno) {
+		model.addAttribute("dto", biz.selectOne(boardno));
+		return "boarddetail";
+	}
+	
+	@RequestMapping("/boarddelete.do")
+	public String boardDelete(int boardno) {
+		int res = biz.delete(boardno);
+		
+		if(res>0) {
+			return "redirect:lol.do";
+		}
+		else {
+			return "redirect:boarddetail.do?boardno="+boardno;
+		}
+	}
+	
+	@RequestMapping("/recode.do")
+	public String recode() {
+		return "recode";
+	}
+}
