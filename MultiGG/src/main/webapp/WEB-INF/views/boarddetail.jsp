@@ -9,12 +9,32 @@
 <body>
 	<table border="1">
 		<tr>
-			<th>WRITER</th>
-			<td>${dto.boardname }</td>
+			<th>NO</th>
+			<td>${dto.boardno }</td>
+		</tr>
+		<tr>
+			<th>KATEGORIE</th>
+			<td>${dto.boardkategorie }</td>
 		</tr>
 		<tr>
 			<th>TITLE</th>
 			<td>${dto.boardtitle }</td>
+		</tr>
+		<tr>
+			<th>WRITER</th>
+			<td>${dto.boardname }</td>
+		</tr>
+		<tr>
+			<th>DATE</th>
+			<td>${dto.boarddate }</td>
+		</tr>
+		<tr>
+			<th>VIEW</th>
+			<td>${dto.boardview }</td>
+		</tr>
+		<tr>
+			<th>LIKE</th>
+			<td>${dto.boardlike }</td>
 		</tr>
 		<tr>
 			<th>CONTENT</th>
