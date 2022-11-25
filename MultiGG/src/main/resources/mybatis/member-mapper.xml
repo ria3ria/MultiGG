@@ -9,6 +9,6 @@
 		</select>
 		
 		<insert id="insert" parameterType="memberDto">
-			INSERT INTO MYMEMBER VALUES(NULL, #{memberemail}, #{memberpw}, #{membername}, "user", NOW())
+			INSERT INTO MEMBER VALUES(NULL, #{memberemail}, #{memberpw}, #{membername}, "user", NOW())
 		</insert>
 </mapper>

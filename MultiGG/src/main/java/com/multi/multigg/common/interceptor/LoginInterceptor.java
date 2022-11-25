@@ -12,7 +12,24 @@ public class LoginInterceptor implements HandlerInterceptor {
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-		return true;
+		if(request.getRequestURI().contains("/loginform.do") || 
+				request.getRequestURI().contains("/ajaxlogin.do")|| 
+				request.getSession().getAttribute("login") != null ||
+				request.getRequestURI().contains("/test.do") ||
+				request.getRequestURI().contains("/registerform.do")||
+				request.getRequestURI().contains("/register.do")  ||
+				request.getRequestURI().contains("/lol.do") ||
+				request.getRequestURI().contains("/recode.do") ||
+				request.getRequestURI().contains("/main.do")
+				) {
+				return true;
+			}
+			if(request.getSession().getAttribute("login") == null) {
+				response.sendRedirect("loginform.do");
+				return false;
+			}
+			
+			return false;
 	}
 	
 	@Override
