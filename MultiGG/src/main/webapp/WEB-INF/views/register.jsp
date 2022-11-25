@@ -29,7 +29,7 @@
             </div>
             <div class="submit">
                 <input type="submit" value="회원가입">
-                <input type="submit" value="취소" onclick="index.html">
+                <input type="button" value="취소" onclick="location.href='index.html'">
             </div>
         </div>
     </div>
