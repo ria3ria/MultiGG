@@ -9,6 +9,7 @@ public interface BoardDao {
 	String NAMESPACE = "board.";
 	
 	public List<BoardDto> selectList();
+	public List<BoardDto> searchList(String keyword);
 	public BoardDto selectOne(int myno);
 	public int insert(BoardDto dto);
 	public int update(BoardDto dto);

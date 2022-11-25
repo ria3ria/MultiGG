@@ -25,6 +25,12 @@ public class HomeController {
 		return "lol";
 	}
 	
+	@RequestMapping("/boardsearch.do")
+	public String boardsearch(Model model, String keyword) {
+		model.addAttribute("list", biz.searchList(keyword));
+		return "lol";
+	}
+	
 	@RequestMapping("/login.do")
 	public String login() {
 		return "login";
@@ -38,7 +44,7 @@ public class HomeController {
 	@RequestMapping("/boardupdateform.do")
 	public String boardUpdateForm(Model model, int boardno) {
 		model.addAttribute("dto", biz.selectOne(boardno));
-		return "boarduptate";
+		return "boardupdate";
 	}
 	
 	@RequestMapping("/boardwrite.do")
@@ -50,6 +56,18 @@ public class HomeController {
 		}
 		else {
 			return "redirect:boardwriteform.do";
+		}
+	}
+	
+	@RequestMapping("/boardupdate.do")
+	public String boardUpdate(BoardDto dto) {
+		int res = biz.update(dto);
+		
+		if(res>0) {
+			return "redirect:boarddetail.do?boardno="+dto.getBoardno();
+		}
+		else {
+			return "redirect:boardupdateform.do?boardno="+dto.getBoardno();
 		}
 	}
 	
