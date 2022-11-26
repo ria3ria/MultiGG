@@ -1,9 +1,14 @@
 package com.multi.multigg;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.multi.multigg.model.biz.BoardBiz;
 import com.multi.multigg.model.biz.CommentBiz;
@@ -23,8 +28,8 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/lol.do")
-	public String lol(Model model) {
-		model.addAttribute("list", biz.selectList());
+	public String lol(Model model, int page) {
+		model.addAttribute("list", biz.selectList(page));
 		return "lol";
 	}
 	
@@ -39,11 +44,6 @@ public class HomeController {
 		return "login";
 	}
 	
-	@RequestMapping("/boardwriteform.do")
-	public String boardWriteForm() {
-		return "boardwriteform";
-	}
-	
 	@RequestMapping("/boardupdateform.do")
 	public String boardUpdateForm(Model model, int boardno) {
 		model.addAttribute("dto", biz.selectOne(boardno));
@@ -55,7 +55,7 @@ public class HomeController {
 		int res = biz.insert(dto);
 		
 		if(res>0) {
-			return "redirect:lol.do";
+			return "redirect:lol.do?page=0";
 		}
 		else {
 			return "redirect:boardwriteform.do";
@@ -64,6 +64,7 @@ public class HomeController {
 	
 	@RequestMapping("/boardupdate.do")
 	public String boardUpdate(BoardDto dto) {
+		System.out.println("update: "+dto);
 		int res = biz.update(dto);
 		
 		if(res>0) {
@@ -90,7 +91,7 @@ public class HomeController {
 		int res = biz.delete(boardno);
 		
 		if(res>0) {
-			return "redirect:lol.do";
+			return "redirect:lol.do?page=0";
 		}
 		else {
 			return "redirect:boarddetail.do?boardno="+boardno;
@@ -101,4 +102,15 @@ public class HomeController {
 	public String recode() {
 		return "recode";
 	}
+	
+	@RequestMapping("/boardwriteform.do")
+	public String boardWriteForm() {
+		return "boardwriteform";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/fileuploadajax.do", method=RequestMethod.POST)
+	public String[] fileUploadAjax(HttpServletRequest request, Model model, MultipartFile[] uploadFile) {
+		return biz.saveFile(request.getSession().getServletContext().getRealPath("/")+"img", uploadFile);
+    }
 }

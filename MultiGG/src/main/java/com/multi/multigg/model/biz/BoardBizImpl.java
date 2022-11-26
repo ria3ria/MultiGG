@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.multi.multigg.model.dao.BoardDao;
 import com.multi.multigg.model.dto.BoardDto;
@@ -16,8 +16,8 @@ public class BoardBizImpl implements BoardBiz {
 	private BoardDao dao;
 
 	@Override
-	public List<BoardDto> selectList() {
-		return dao.selectList();
+	public List<BoardDto> selectList(int page) {
+		return dao.selectList(page);
 	}
 
 	@Override
@@ -43,6 +43,11 @@ public class BoardBizImpl implements BoardBiz {
 	@Override
 	public List<BoardDto> searchList(String keyword) {
 		return dao.searchList(keyword);
+	}
+
+	@Override
+	public String[] saveFile(String path, MultipartFile[] uploadFile) {
+		return dao.saveFile(path, uploadFile);
 	}
 
 }
