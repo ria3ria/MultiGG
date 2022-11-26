@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.multi.multigg.model.biz.BoardBiz;
+import com.multi.multigg.model.biz.CommentBiz;
 import com.multi.multigg.model.dto.BoardDto;
 
 @Controller
@@ -18,6 +19,8 @@ public class HomeController {
 	
 	@Autowired
 	private BoardBiz biz;
+	@Autowired
+	private CommentBiz commentBiz;
 	
 	@RequestMapping("/main.do")
 	public String main() {
@@ -75,6 +78,11 @@ public class HomeController {
 	@RequestMapping("/boarddetail.do")
 	public String boardDetail(Model model, int boardno) {
 		model.addAttribute("dto", biz.selectOne(boardno));
+		
+		BoardDto dto = biz.selectOne(boardno);
+		//뎃글 모여주기 기능
+		model.addAttribute("commentList",commentBiz.selectList(dto.getBoardno()));
+				
 		return "boarddetail";
 	}
 	
