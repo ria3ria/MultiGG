@@ -1,11 +1,13 @@
 package com.multi.multigg.model.dao;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.multi.multigg.model.dto.BoardDto;
 
@@ -16,11 +18,11 @@ public class BoardDaoImpl implements BoardDao {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public List<BoardDto> selectList() {
+	public List<BoardDto> selectList(int page) {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		
 		try {
-			list = sqlSession.selectList(NAMESPACE+"selectList");
+			list = sqlSession.selectList(NAMESPACE+"selectList", page*9);
 		} catch (Exception e) {
 			System.out.println("[error] : select list");
 			e.printStackTrace();
@@ -96,5 +98,29 @@ public class BoardDaoImpl implements BoardDao {
 		}
 		
 		return list;
+	}
+
+	@Override
+	public String[] saveFile(String path, MultipartFile[] uploadFile) {
+        String[] fileNameArr = new String[uploadFile.length];
+        
+        for(int i=0; i<uploadFile.length; i++) {
+        	MultipartFile multipartFile = uploadFile[i];
+        	fileNameArr[i] = multipartFile.getOriginalFilename();
+            
+            String uploadFileName = multipartFile.getOriginalFilename();
+            uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
+            
+            System.out.println(multipartFile.getOriginalFilename()+" "+multipartFile.getSize()+"byte");
+            
+            File saveFile = new File(path, uploadFileName);
+            
+            try {
+                multipartFile.transferTo(saveFile);
+            }catch (Exception e) {
+            	System.out.println(e.getMessage());
+            }
+        }
+        return fileNameArr;
 	}
 }
