@@ -141,4 +141,15 @@ public class HomeController {
 		
 		return "lolinfo";
 	}
+	
+	@RequestMapping("/boardwriteform.do")
+	public String boardWriteForm() {
+		return "boardwriteform";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/fileuploadajax.do", method=RequestMethod.POST)
+	public String[] fileUploadAjax(HttpServletRequest request, Model model, MultipartFile[] uploadFile) {
+		return biz.saveFile(request.getSession().getServletContext().getRealPath("/")+"img", uploadFile);
+    }
 }
