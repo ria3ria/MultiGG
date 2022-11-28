@@ -1,10 +1,16 @@
 package com.multi.multigg;
 
+import java.io.IOException;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.multi.multigg.model.biz.BoardBiz;
 import com.multi.multigg.model.biz.CommentBiz;
 import com.multi.multigg.model.dto.BoardDto;
+import com.multi.multigg.model.dto.LolPnDto;
 
 @Controller
 public class HomeController {
@@ -101,6 +108,38 @@ public class HomeController {
 	@RequestMapping("/recode.do")
 	public String recode() {
 		return "recode";
+	}
+	
+	@GetMapping("/lolinfo.do")
+	public String lolinfo(Model model) {
+		String URL = "https://www.leagueoflegends.com/ko-kr/news/game-updates/patch-12-22-notes/";
+		Document doc = null;
+		try {
+			doc = Jsoup.connect(URL).get();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		Elements ele = doc.select("#patch-notes-container > div:nth-child(10)");
+		
+		
+		System.out.println(ele.select("h4").text());
+		System.out.println(ele.select("span").text());
+		System.out.println(ele.select("li").text());
+		
+		System.out.println(ele.select("a"));
+		
+		
+		LolPnDto dto = new LolPnDto();
+		dto.setTitle(ele.select("h4").text());
+		dto.setHeadcontent(ele.select("span").text());
+		dto.setContent(ele.select("li").text());
+		dto.setImage(ele.select("a"));
+		
+		model.addAttribute("dto", dto);
+		
+		return "lolinfo";
 	}
 	
 	@RequestMapping("/boardwriteform.do")
