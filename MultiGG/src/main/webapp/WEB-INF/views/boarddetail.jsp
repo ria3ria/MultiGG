@@ -113,7 +113,7 @@
 									<th colspan="6" align="right">
 										<input id="commentupdateform" type="button" value="수정" style="display: true" onclick="commentUpdateForm();">
 										<input id="commentupdate" type="submit" value="수정 완료" style="display: none" >
-										<input type="button" value="삭제">
+										<input type="button" value="삭제" onclick="location.href='commentdelete.do?commentno=${commentdto.commentno}&boardno=${dto.boardno }'">
 									</th>
 								</tr>
 							</form>

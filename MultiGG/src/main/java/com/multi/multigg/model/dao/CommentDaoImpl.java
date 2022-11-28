@@ -57,7 +57,17 @@ public class CommentDaoImpl implements CommentDao{
 	}
 
 	@Override
-	public int delete(int myno) {
+	public int delete(int commentno) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.delete(NAMESPACE+"delete",commentno);
+		} catch (Exception e) {
+			System.out.println("[error] : comment delete");
+			e.printStackTrace();
+		}
+		
+		
 		return 0;
 	}
 
