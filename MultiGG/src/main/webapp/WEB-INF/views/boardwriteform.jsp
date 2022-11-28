@@ -59,7 +59,7 @@ function loadBoardContent() {
 </head>
 <body>
 	<form action="boardwrite.do" method="post" onsubmit="return loadBoardContent();">
-        <input type="hidden" name="boardname" value="유저닉네임">
+        <input type="hidden" name="boardname" value="${login.membernickname }">
         <input type="hidden" name="boardkategorie" value="유머">
         <input type="hidden" name="boardcontent" value="">
         <input type="hidden" name="boardview" value="0">

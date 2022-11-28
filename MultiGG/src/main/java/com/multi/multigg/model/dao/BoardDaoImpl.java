@@ -3,6 +3,7 @@ package com.multi.multigg.model.dao;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,11 +88,15 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public List<BoardDto> searchList(String keyword) {
+	public List<BoardDto> searchList(Map<String, Object> map) {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		
 		try {
-			list = sqlSession.selectList(NAMESPACE+"searchList", keyword);
+			if(map.containsKey("page")) {
+				int page = Integer.parseInt(map.get("page")+"")*9;
+				map.put("page", page);
+			}
+			list = sqlSession.selectList(NAMESPACE+"searchList", map);
 		} catch (Exception e) {
 			System.out.println("[error] : search list");
 			e.printStackTrace();
