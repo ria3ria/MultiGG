@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
@@ -92,7 +93,15 @@
 									<li>
 			                            <p class="boardno">${dto.boardno }</p>
 			                            <p class="boardkategorie">${dto.boardkategorie }</p>
-			                            <p class="boardtitle"><a href="boarddetail.do?boardno=${dto.boardno }">${dto.boardtitle }</a></p>
+		                            	<c:set var = "content" value = "${dto.boardcontent }"></c:set>
+			                            <c:choose>
+			                            	<c:when test="${fn:contains(content, '<img src=')}">
+					                            <p class="boardtitle"><a href="boarddetail.do?boardno=${dto.boardno }">${dto.boardtitle }(사진)</a></p>
+			                            	</c:when>
+			                            	<c:otherwise>
+					                            <p class="boardtitle"><a href="boarddetail.do?boardno=${dto.boardno }">${dto.boardtitle }</a></p>
+			                            	</c:otherwise>
+			                            </c:choose>
 			                            <p class="boardname">${dto.boardname }</p>
 			                            <fmt:formatDate var="date" value="${dto.boarddate }" pattern="yy/MM/dd"/>
 			                            <p class="boarddate">${date }</p>

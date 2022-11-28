@@ -11,11 +11,13 @@ public class BoardDto {
 	private Date boarddate;
 	private int boardview;
 	private int boardlike;
+	private int memberno;
+	private Date boardmdfdate;
 	public BoardDto() {
 		super();
 	}
 	public BoardDto(String boardkategorie, int boardno, String boardname, String boardtitle, String boardcontent,
-			Date boarddate, int boardview, int boardlike) {
+			Date boarddate, int boardview, int boardlike, int memberno, Date boardmdfdate) {
 		super();
 		this.boardkategorie = boardkategorie;
 		this.boardno = boardno;
@@ -25,6 +27,8 @@ public class BoardDto {
 		this.boarddate = boarddate;
 		this.boardview = boardview;
 		this.boardlike = boardlike;
+		this.memberno = memberno;
+		this.boardmdfdate = boardmdfdate;
 	}
 	public String getBoardkategorie() {
 		return boardkategorie;
@@ -50,6 +54,12 @@ public class BoardDto {
 	public int getBoardlike() {
 		return boardlike;
 	}
+	public int getMemberno() {
+		return memberno;
+	}
+	public Date getBoardmdfdate() {
+		return boardmdfdate;
+	}
 	public void setBoardkategorie(String boardkategorie) {
 		this.boardkategorie = boardkategorie;
 	}
@@ -74,10 +84,17 @@ public class BoardDto {
 	public void setBoardlike(int boardlike) {
 		this.boardlike = boardlike;
 	}
+	public void setMemberno(int memberno) {
+		this.memberno = memberno;
+	}
+	public void setBoardmdfdate(Date boardmdfdate) {
+		this.boardmdfdate = boardmdfdate;
+	}
 	@Override
 	public String toString() {
 		return "BoardDto [boardkategorie=" + boardkategorie + ", boardno=" + boardno + ", boardname=" + boardname
 				+ ", boardtitle=" + boardtitle + ", boardcontent=" + boardcontent + ", boarddate=" + boarddate
-				+ ", boardview=" + boardview + ", boardlike=" + boardlike + "]";
+				+ ", boardview=" + boardview + ", boardlike=" + boardlike + ", memberno=" + memberno + ", boardmdfdate="
+				+ boardmdfdate + "]";
 	}
 }
