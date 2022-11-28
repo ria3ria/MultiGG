@@ -37,5 +37,15 @@ public class CommentComtroller {
 		
 		return "redirect:boarddetail.do?boardno="+commentDto.getBoardno();
 	}
+	
+	@RequestMapping("commentdelete.do")
+	public String commentdelete(int commentno, int boardno) {
+		int res=0;
+		
+		res = commentBiz.delete(commentno);
+		
+		
+		return "redirect:boarddetail.do?boardno="+boardno;
+	}
 
 }

@@ -14,6 +14,9 @@
 		<update id="update" parameterType="commentDto">
 			UPDATE COMMENT SET COMMENTTITLE=#{commenttitle} WHERE COMMENTNO=#{commentno}
 		</update>
+		<delete id="delete" parameterType="int">
+			DELETE FROM COMMENT WHERE COMMENTNO=#{commentno}
+		</delete>
 		
 		
 </mapper>
