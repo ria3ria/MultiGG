@@ -37,25 +37,21 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/lol.do")
-	public String lol(Model model, int page, String keyword) {
-		if(keyword == null || keyword.isBlank()) {
-			model.addAttribute("list", biz.selectList(page));
-		}
-		else {
+	public String lol(Model model, int page, String keyword, String order) {
+		if(keyword != null && !keyword.isBlank()) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("keyword", keyword);
 			map.put("page", page);
 			model.addAttribute("list", biz.searchList(map));
 		}
-		return "lol";
-	}
-	
-	@RequestMapping("/boardsearch.do")
-	public String boardsearch(Model model, String keyword, int page) {
-		Map<String ,Object> map = new HashMap<String, Object>();
-		map.put("keyword", keyword);
-		map.put("page", page);
-		model.addAttribute("list", biz.searchList(map));
+		else if(order != null && !order.isBlank()) {
+			if(order.equals("view")) {
+				
+			}
+		}
+		else {
+			model.addAttribute("list", biz.selectList(page));
+		}
 		return "lol";
 	}
 	
