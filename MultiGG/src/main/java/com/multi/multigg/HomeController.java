@@ -119,13 +119,14 @@ public class HomeController {
 		System.out.println(ele.select("span").text());
 		System.out.println(ele.select("li").text());
 		
+		System.out.println(ele.select("a"));
 		
 		
 		LolPnDto dto = new LolPnDto();
 		dto.setTitle(ele.select("h4").text());
 		dto.setHeadcontent(ele.select("span").text());
 		dto.setContent(ele.select("li").text());
-		
+		dto.setImage(ele.select("a"));
 		
 		model.addAttribute("dto", dto);
 		
