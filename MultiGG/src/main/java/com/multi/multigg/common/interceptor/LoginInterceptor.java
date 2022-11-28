@@ -15,11 +15,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 		if(request.getRequestURI().contains("/loginform.do") || 
 				request.getRequestURI().contains("/ajaxlogin.do")|| 
 				request.getSession().getAttribute("login") != null ||
+				request.getRequestURI().contains("/test.do") ||
 				request.getRequestURI().contains("/registerform.do")||
 				request.getRequestURI().contains("/register.do")  ||
 				request.getRequestURI().contains("/lol.do") ||
 				request.getRequestURI().contains("/recode.do") ||
-				request.getRequestURI().contains("/main.do")
+				request.getRequestURI().contains("/main.do") ||
+				request.getRequestURI().contains("/idChk.do")
 				) {
 				return true;
 			}
@@ -27,8 +29,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 				response.sendRedirect("loginform.do");
 				return false;
 			}
-			
-			return false;
+			// if(게시글 작성, 댓글 작성)
+			return true;  //임시
 	}
 	
 	@Override
