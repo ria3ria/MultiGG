@@ -45,6 +45,9 @@
 	    }
 	    return result;
 	}
+	function search() {
+		location.href = 'lol.do?page=0&keyword=' + $("#keyword").val();
+	}
 </script>
 </head>
 <body>
@@ -55,14 +58,11 @@
             <div id="board_top">
                 <input type="button" value="글쓰기" onclick="location.href='boardwriteform.do'">
                 <input type="button" value="글정렬">
-                <form action="boardsearch.do">
-	                <input type="text" name="keyword" placeholder="검색어 입력">
-	                <input type="hidden" name="page" value="0">
-	                <input type="submit" value="글검색">
-	                <br>
-	                <input type="button" value="다음 페이지로" onclick="nextPage();">
-	                <input type="button" value="이전 페이지로" onclick="prevPage();">
-                </form>
+				<input type="text" id="keyword" placeholder="검색어 입력">
+				<input type="button" value="글검색" onclick="search();">
+				<br>
+				<input type="button" value="다음 페이지로" onclick="nextPage();">
+				<input type="button" value="이전 페이지로" onclick="prevPage();">
             </div>
             <div id="board_bottom">
                 <div id="board_list_area">
