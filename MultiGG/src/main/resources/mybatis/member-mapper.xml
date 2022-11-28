@@ -9,6 +9,18 @@
 		</select>
 		
 		<insert id="insert" parameterType="memberDto">
-			INSERT INTO MYMEMBER VALUES(NULL, #{memberemail}, #{memberpw}, #{membername}, "user", NOW())
+			INSERT INTO MEMBER VALUES(NULL, #{memberemail},#{membernickname}, #{memberpw}, #{membername}, "user", NOW())
 		</insert>
-</mapper>
+ 		
+ 		<select id="idCheck" resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE MEMBEREMAIL = #{memberemail}
+		</select>
+ 		
+ 		<select id="pwCheck" resultType="String">
+			SELECT MEMBERPW FROM MEMBER WHERE MEMBEREMAIL = #{memberemail}
+		</select>
+		
+		<update id="pwUpdate">
+			UPDATE MEMBER SET MEMBERPW = #{memberpw} WHERE MEMBEREMAIL = #{memberemail}
+		</update>
+</mapper> 

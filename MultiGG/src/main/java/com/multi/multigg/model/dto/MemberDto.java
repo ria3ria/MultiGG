@@ -6,22 +6,27 @@ public class MemberDto {
 	private int memberno;
 	private String memberemail;
 	private String memberpw;
+	private String membernickname;
 	private String membername;
 	private String memberlevel;
 	private Date memberdate;
 	public MemberDto() {
 		super();
 	}
-	public MemberDto(int memberno, String memberemail, String memberpw, String membername, String memberlevel,
-			Date memberdate) {
+	
+
+	public MemberDto(int memberno, String memberemail, String memberpw, String membernickname, String membername,
+			String memberlevel, Date memberdate) {
 		super();
 		this.memberno = memberno;
 		this.memberemail = memberemail;
 		this.memberpw = memberpw;
+		this.membernickname = membernickname;
 		this.membername = membername;
 		this.memberlevel = memberlevel;
 		this.memberdate = memberdate;
 	}
+
 	public int getMemberno() {
 		return memberno;
 	}
@@ -58,4 +63,13 @@ public class MemberDto {
 	public void setMemberdate(Date memberdate) {
 		this.memberdate = memberdate;
 	}
+
+	public String getMembernickname() {
+		return membernickname;
+	}
+
+	public void setMembernickname(String membernickname) {
+		this.membernickname = membernickname;
+	}
+	
 }

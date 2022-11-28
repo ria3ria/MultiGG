@@ -5,14 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
+<h1>내 정보 수정</h1>
+<form  method="post" action="mypageUpdateForm.do">
 
-	<pre>
-메인 페이지
-게임 선택버튼
-	</pre>
-	
+</form>
 
 </body>
 </html>
