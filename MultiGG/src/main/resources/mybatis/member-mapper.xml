@@ -12,6 +12,10 @@
 			INSERT INTO MEMBER VALUES(NULL, #{memberemail},#{membernickname}, #{memberpw}, #{membername}, "user", NOW())
 		</insert>
  		
+ 		<select id="idCheck" resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE MEMBEREMAIL = #{memberemail}
+		</select>
+ 		
  		<select id="pwCheck" resultType="String">
 			SELECT MEMBERPW FROM MEMBER WHERE MEMBEREMAIL = #{memberemail}
 		</select>
