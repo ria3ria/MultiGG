@@ -1,6 +1,7 @@
 package com.multi.multigg.model.biz;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,8 @@ public class BoardBizImpl implements BoardBiz {
 	}
 
 	@Override
-	public List<BoardDto> searchList(String keyword) {
-		return dao.searchList(keyword);
+	public List<BoardDto> searchList(Map<String, Object> map) {
+		return dao.searchList(map);
 	}
 
 	@Override

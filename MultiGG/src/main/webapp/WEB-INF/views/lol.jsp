@@ -16,12 +16,24 @@
 		paramObj = get_query();
 	});
 	function nextPage() {
+		let url = "lol.do?";
 		if(paramObj['page'] > 0) {
-			location.href='lol.do?page=' + (parseInt(paramObj['page'])-1);
+			url += '&page=' + (parseInt(paramObj['page'])-1);
 		}
+		else {
+			return;
+		}
+		if(paramObj['keyword'] != null && paramObj['keyword'] != "") {
+			url += '&keyword=' + paramObj['keyword'];
+		}
+		location.href = url;
 	}
 	function prevPage() {
-		location.href='lol.do?page=' + (parseInt(paramObj['page'])+1);
+		let url = 'lol.do?page=' + (parseInt(paramObj['page'])+1);
+		if(paramObj['keyword'] != null && paramObj['keyword'] != "") {
+			url += '&keyword=' + paramObj['keyword'];
+		}
+		location.href = url;
 	}
 	function get_query() {
 	    var url = document.location.href;
@@ -44,6 +56,7 @@
                 <input type="button" value="글정렬">
                 <form action="boardsearch.do">
 	                <input type="text" name="keyword" placeholder="검색어 입력">
+	                <input type="hidden" name="page" value="0">
 	                <input type="submit" value="글검색">
 	                <br>
 	                <input type="button" value="다음 페이지로" onclick="nextPage();">
