@@ -5,13 +5,11 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -106,21 +104,16 @@ private Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	
 	@RequestMapping("/register.do")
-	public String memberInsert(MemberDto dto, HttpServletResponse response) throws IOException {
+	public String memberInsert(MemberDto dto) throws IOException {
 		// 화면에서 넘어오는 password를 암호화 해서 dto에 저장
 			dto.setMemberpw(passwordEncoder.encode(dto.getMemberpw()));
 		int res = biz.insert(dto);
 
 		if(res>0) {
-			response.setContentType("text/html; charset=utf-8");
-			PrintWriter out = response.getWriter();
-
-			out.println("<script>alert('"+dto.getMembernickname()+ "님 가입을 축하합니다!'); location.href='loginform.do'; self.close();</script>");
-			out.flush();
 			return"redirect:loginform.do";
 		}else {
 			return"redirect:registerform.do";
-		}
+		}//location.href='loginform.do';   
 	}
 	
 	@RequestMapping("/mypage.do")

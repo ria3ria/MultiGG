@@ -4,8 +4,8 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="board">
-		<select id="selectList" resultType="boardDto">
-			SELECT * FROM LOLBOARD ORDER BY BOARDNO DESC
+		<select id="selectList" parameterType="int" resultType="boardDto">
+			SELECT * FROM LOLBOARD ORDER BY BOARDNO DESC LIMIT #{page}, 9
 		</select>
 		<select id="searchList" parameterType="String" resultType="boardDto">
 			SELECT * FROM LOLBOARD WHERE BOARDNAME LIKE CONCAT('%',#{keyword},'%') OR BOARDTITLE LIKE CONCAT('%',#{keyword},'%') OR BOARDCONTENT LIKE CONCAT('%',#{keyword},'%') ORDER BY BOARDNO DESC

@@ -8,111 +8,31 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-html, body {
-    height: 100%;
-    margin: 0;
-}
-body{
-    padding:0;
-    font-size: 1.5rem;
-    font-family: "verdana";
-    font-weight: bolder;
-    text-align: center;
-}
-#screen{
-    width: 100%;
-    height: 100%;
-}
-#header{
-    width:100%;
-    height:10%;
-    background-color:pink;
-}
-#userInfo{
-    width:15%;
-    height:30%;
-    background-color:green;
-    float:left;
-}
-#kategorie{
-    width:15%;
-    height:60%;
-    background-color:yellow;
-    float:left;
-}
-#board_body{
-    width:85%;
-    height:90%;
-    float:right;
-}
-#board_top{
-    width:100%;
-    height:15%;
-    background-color: hotpink;
-}
-#board_bottom{
-    width:100%;
-    height:85%;
-    background-color: aqua;
-    position: relative;
-}
-#board_list_area {
-    width: 96%;
-    height: 94%;
-    background-color: skyblue;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-ul, li {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-ul {
-    height: 100%;
-    list-style: none;
-}
-li {
-    height: 10%;
-    font-size: 1.2rem;
-}
-li p {
-    float: left;
-    background-color: greenyellow;
-}
-li:first-child p {
-    background-color: pink;
-}
-li p {
-    height: 100%;
-    margin: 0;
-}
-.boardno {
-    width: 7%;
-}
-.boardkategorie {
-    width: 10%;
-}
-.boardtitle {
-    width: 40%;
-}
-.boardname {
-    width: 15%;
-}
-.boarddate {
-    width: 14%;
-}
-.boardview {
-    width: 7%;
-}
-.boardlike {
-    width: 7%;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="css/style_lol.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script type="text/javascript">
+	let paramObj;
+	$(function() {
+		paramObj = get_query();
+	});
+	function nextPage() {
+		if(paramObj['page'] > 0) {
+			location.href='lol.do?page=' + (parseInt(paramObj['page'])-1);
+		}
+	}
+	function prevPage() {
+		location.href='lol.do?page=' + (parseInt(paramObj['page'])+1);
+	}
+	function get_query() {
+	    var url = document.location.href;
+	    var qs = url.substring(url.indexOf('?') + 1).split('&');
+	    for(var i = 0, result = {}; i < qs.length; i++){
+	        qs[i] = qs[i].split('=');
+	        result[qs[i][0]] = decodeURIComponent(qs[i][1]);
+	    }
+	    return result;
+	}
+</script>
 </head>
 <body>
 	<div id="screen">
@@ -125,6 +45,9 @@ li p {
                 <form action="boardsearch.do">
 	                <input type="text" name="keyword" placeholder="검색어 입력">
 	                <input type="submit" value="글검색">
+	                <br>
+	                <input type="button" value="다음 페이지로" onclick="nextPage();">
+	                <input type="button" value="이전 페이지로" onclick="prevPage();">
                 </form>
             </div>
             <div id="board_bottom">
@@ -141,7 +64,15 @@ li p {
                         </li>
 						<c:choose>
 							<c:when test="${empty list }">
-								
+								<li>
+									<p class="boardno">-</p>
+									<p class="boardkategorie">-</p>
+									<p class="boardtitle">작성된 글이 없습니다...</p>
+									<p class="boardname">-</p>
+									<p class="boarddate">-</p>
+									<p class="boardview">-</p>
+									<p class="boardlike">-</p>
+								</li>
 							</c:when>
 							<c:otherwise>
 								<c:forEach items="${list }" var="dto">
