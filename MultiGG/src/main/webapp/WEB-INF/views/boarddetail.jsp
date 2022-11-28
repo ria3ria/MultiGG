@@ -85,8 +85,8 @@
 									<td>${commentdto.commentwriter }</td>
 									<td><textarea id="commenttitle"rows="5" cols="100" readonly="readonly" name="commenttitle">${commentdto.commenttitle }</textarea></td>
 									<td>${commentdto.commentdate }</td>
-									<td>${commentdto.commentgood }<input type="button" value="추천" ></td>
-									<td>${commentdto.commentbad }<input type="button" value="비추천"></td>
+									<td>${good }<input type="button" value="추천" onclick="location.href='commentrecommend.do?membernickname=${login.membernickname}&commentno=${commentdto.commentno}&recommend=1&boardno=${dto.boardno }'"></td>
+									<td>${bad }<input type="button" value="비추천" onclick="location.href='commentrecommend.do?membernickname=${login.membernickname}&commentno=${commentdto.commentno}&recommend=-1&boardno=${dto.boardno }'"></td>
 								</tr>
 								
 								<tr>
@@ -111,6 +111,7 @@
 		
 		<form action="commentinsert.do" method="post">
 			<input type="hidden" name="boardno" value="${dto.boardno }">
+			<input type="hidden" name="memberno" value="${login.memberno }">
 			<table id="commentwrite" border="1" style="display:none" >
 				<tr>
 					<th>WRITER</th>
