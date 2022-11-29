@@ -4,6 +4,7 @@ import java.util.Date;
 
 //CREATE TABLE COMMENT(
 //		COMMENTNO INT AUTO_INCREMENT PRIMARY KEY,
+//		MEMBERNO INT NOT NULL,
 //		BOARDNO INT,
 //		COMMENTWRITER VARCHAR(1000) NOT NULL,
 //		COMMENTTITLE VARCHAR(10000) NOT NULL,
@@ -15,6 +16,7 @@ import java.util.Date;
 
 public class CommentDto {
 	private int commentno;
+	private int memberno;
 	private int boardno;
 	private String commentwriter;
 	private String commenttitle;
@@ -28,10 +30,11 @@ public class CommentDto {
 	}
 
 
-	public CommentDto(int commentno, int boardno, String commentwriter, String commenttitle, int commentgood,
-			int commentbad, Date commentdate) {
+	public CommentDto(int commentno, int memberno, int boardno, String commentwriter, String commenttitle,
+			int commentgood, int commentbad, Date commentdate) {
 		super();
 		this.commentno = commentno;
+		this.memberno = memberno;
 		this.boardno = boardno;
 		this.commentwriter = commentwriter;
 		this.commenttitle = commenttitle;
@@ -48,6 +51,16 @@ public class CommentDto {
 
 	public void setCommentno(int commentno) {
 		this.commentno = commentno;
+	}
+
+
+	public int getMemberno() {
+		return memberno;
+	}
+
+
+	public void setMemberno(int memberno) {
+		this.memberno = memberno;
 	}
 
 
@@ -109,6 +122,8 @@ public class CommentDto {
 	public void setCommentdate(Date commentdate) {
 		this.commentdate = commentdate;
 	}
+
+
 	
 	
 	

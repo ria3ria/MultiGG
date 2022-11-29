@@ -8,11 +8,14 @@
 		<typeAlias type="com.multi.multigg.model.dto.BoardDto" alias="boardDto"/>
 		<typeAlias type="com.multi.multigg.model.dto.MemberDto" alias="memberDto"/>
 		<typeAlias type="com.multi.multigg.model.dto.CommentDto" alias="commentDto"/>
+		<typeAlias type="com.multi.multigg.model.dto.RecommendDto" alias="recommendDto"/>
+		<typeAlias type="com.multi.multigg.model.dto.RecommendUpdateDto" alias="recommendUpdateDto"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="/mybatis/board-mapper.xml"/>
 		<mapper resource="/mybatis/member-mapper.xml"/>
 		<mapper resource="/mybatis/comment-mapper.xml"/>
+		<mapper resource="/mybatis/recommend-mapper.xml"/>
 	</mappers>
 </configuration>
