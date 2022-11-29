@@ -24,17 +24,20 @@
 		else {
 			return;
 		}
-		if(paramObj['keyword'] != null && paramObj['keyword'] != "") {
-			url += '&keyword=' + paramObj['keyword'];
-		}
-		location.href = url;
+		location.href = get_url(url);
 	}
 	function prevPage() {
 		let url = 'lol.do?page=' + (parseInt(paramObj['page'])+1);
+		location.href = get_url(url);
+	}
+	function get_url(url) {
 		if(paramObj['keyword'] != null && paramObj['keyword'] != "") {
 			url += '&keyword=' + paramObj['keyword'];
 		}
-		location.href = url;
+		if(paramObj['boardkategorie'] != null && paramObj['boardkategorie'] != "") {
+			url += '&boardkategorie=' + paramObj['boardkategorie'];
+		}
+		return url;
 	}
 	function get_query() {
 	    var url = document.location.href;
@@ -53,7 +56,18 @@
 <body>
 	<div id="screen">
         <div id="header">header</div>
-        <div id="userInfo">userInfo</div>
+        <div id="userInfo">
+        	<p>내 정보</p>
+        	<c:choose>
+				<c:when test="${empty login }">
+					<input type="button" value="로그인" onclick="location.href='loginform.do'">
+				</c:when>
+				<c:otherwise>
+					<input type="button" value="내정보" onclick="location.href='mypage.do'">
+					<input type="button" value="로그아웃" onclick="location.href='logout.do'">
+				</c:otherwise>
+			</c:choose>
+        </div>
         <div id="board_body">
             <div id="board_top">
                 <input type="button" value="글쓰기" onclick="location.href='boardwriteform.do'">
@@ -115,6 +129,10 @@
                 </div>
             </div>
         </div>
-        <div id="kategorie">kategorie</div>
+        <div id="kategorie">
+			<a href='lol.do?page=0'>전체보기</a><br>
+			<a href='lol.do?page=0&boardkategorie=유머'>유머</a><br>
+			<a href='lol.do?page=0&boardkategorie=질문'>질문</a>
+        </div>
     </div>
 </html>

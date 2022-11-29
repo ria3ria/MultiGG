@@ -58,13 +58,16 @@ function loadBoardContent() {
 </script>
 </head>
 <body>
-	<form action="boardwrite.do" method="post" onsubmit="return loadBoardContent();">
+	<form id="writeForm" action="boardwrite.do" method="post" onsubmit="return loadBoardContent();">
 		<input type="hidden" name="boardname" value="${login.membernickname }">
-        <input type="hidden" name="boardkategorie" value="유머">
         <input type="hidden" name="boardcontent" value="">
         <input type="hidden" name="memberno" value="${login.memberno }">
         <div id="screen">
             <div id="title_area">
+            	<select name="boardkategorie" form="writeForm">
+            		<option value="유머">유머</option>
+            		<option value="질문">질문</option>
+            	</select>
                 제목:<input type="text" name="boardtitle" placeholder="제목을 입력하세요...">
                 <br>
                 <input type="file" id="uploadFile" multiple accept="image/*">

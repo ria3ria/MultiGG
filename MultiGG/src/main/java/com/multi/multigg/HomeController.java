@@ -37,7 +37,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/lol.do")
-	public String lol(Model model, int page, String keyword, String order) {
+	public String lol(Model model, int page, String keyword, String order, String boardkategorie) {
 		if(keyword != null && !keyword.isBlank()) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("keyword", keyword);
@@ -48,6 +48,12 @@ public class HomeController {
 			if(order.equals("view")) {
 				
 			}
+		}
+		else if(boardkategorie != null && !boardkategorie.isBlank()) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("boardkategorie", boardkategorie);
+			map.put("page", page);
+			model.addAttribute("list", biz.kategorieList(map));
 		}
 		else {
 			model.addAttribute("list", biz.selectList(page));
@@ -114,6 +120,20 @@ public class HomeController {
 		else {
 			return "redirect:boarddetail.do?boardno="+boardno;
 		}
+	}
+	
+	@RequestMapping("/boardlike.do")
+	public String boardLike(int boardno, int memberno) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("boardno", boardno);
+		map.put("memberno", memberno);
+		if(biz.likeMember(map) == null) {
+			biz.insertLike(map);
+			BoardDto dto = biz.selectOne(boardno);
+			dto.setBoardlike(biz.likeCnt(boardno));
+			biz.update(dto);
+		}
+		return "redirect:boarddetail.do?boardno="+boardno;
 	}
 	
 	@RequestMapping("/recode.do")
