@@ -12,6 +12,7 @@ public class RecommendDto {
 	private int commentno;
 	private int recommend;
 	
+	
 	public RecommendDto() {
 		super();
 	}
@@ -22,12 +23,14 @@ public class RecommendDto {
 		this.commentno = commentno;
 		this.recommend = recommend;
 	}
+	
+	
 
 	public String getMembernickname() {
 		return membernickname;
 	}
 
-	public void setMemvernickname(String membernickname) {
+	public void setMembernickname(String membernickname) {
 		this.membernickname = membernickname;
 	}
 

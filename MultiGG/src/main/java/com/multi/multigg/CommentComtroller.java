@@ -57,12 +57,10 @@ public class CommentComtroller {
 	@RequestMapping("commentrecommend.do")
 	public String commentrecommend(Model model,@ModelAttribute RecommendDto recommendDto, int boardno) {
 		int[] recommend = new int[2];
-		recommend = recommendBiz.commentRecommend(recommendDto);
-		System.out.println(recommendDto.getMembernickname());
-		System.out.println(recommendDto);
 		
-		model.addAttribute("good",recommend[0]);
-		model.addAttribute("bad",recommend[1]);
+		recommend = recommendBiz.commentRecommend(recommendDto);
+		
+		
 		return "redirect:boarddetail.do?boardno="+boardno;
 	}
 

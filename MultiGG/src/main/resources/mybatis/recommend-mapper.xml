@@ -14,11 +14,17 @@
 			INSERT INTO COMMENTRECOMMEND VALUES(#{membernickname},#{commentno},#{recommend})
 		</insert>
 		<select id="countGood" parameterType="recommendDto" resultType="int">
-			SELECT COUNT(*) COMMENTRECOMMEND WHERE RECOMMEND=1
+			SELECT COUNT(*) FROM COMMENTRECOMMEND WHERE RECOMMEND=1
 		</select>
 		<select id="countBad" parameterType="recommendDto" resultType="int">
-			SELECT COUNT(*) COMMENTRECOMMEND WHERE RECOMMEND=-1
+			SELECT COUNT(*) FROM COMMENTRECOMMEND WHERE RECOMMEND=-1
 		</select>
+		<update id="updategood" parameterType="recommendUpdateDto" >
+			UPDATE COMMENT SET COMMENTGOOD=#{count} WHERE COMMENTNO=#{commentno}
+		</update>
+		<update id="updatebad" parameterType="recommendUpdateDto">
+			UPDATE COMMENT SET COMMENTBAD=#{count} WHERE COMMENTNO=#{commentno}
+		</update>
 </mapper> 
 
 
