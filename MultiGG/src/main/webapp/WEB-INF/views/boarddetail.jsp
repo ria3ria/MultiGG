@@ -44,8 +44,15 @@
 		</div>
 		<div id="board_footer_area">
 			<input type="button" value="목록" onclick="location.href='lol.do?page=0'">
-			<input type="button" value="수정" onclick="location.href='boardupdateform.do?boardno=${dto.boardno}'">
-			<input type="button" value="삭제" onclick="location.href='boarddelete.do?boardno=${dto.boardno}'">
+			<c:choose>
+				<c:when test="${not empty login and dto.memberno eq login.memberno }">
+					<input type="button" value="수정" onclick="location.href='boardupdateform.do?boardno=${dto.boardno}'">
+					<input type="button" value="삭제" onclick="location.href='boarddelete.do?boardno=${dto.boardno}'">
+				</c:when>
+				<c:otherwise>
+					<input type="button" value="추천" onclick="location.href='boardlike.do?boardno=${dto.boardno}&memberno=${login.memberno }'">
+				</c:otherwise>
+			</c:choose>
 			<input type="button" value="댓글" onclick="commentShow();">
 		</div>
 	</div>

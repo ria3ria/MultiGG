@@ -1,5 +1,6 @@
 package com.multi.multigg.model.biz;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +50,26 @@ public class BoardBizImpl implements BoardBiz {
 	@Override
 	public String[] saveFile(String path, MultipartFile[] uploadFile) {
 		return dao.saveFile(path, uploadFile);
+	}
+
+	@Override
+	public List<BoardDto> kategorieList(Map<String, Object> map) {
+		return dao.kategorieList(map);
+	}
+
+	@Override
+	public int likeCnt(int boardno) {
+		return dao.likeCnt(boardno);
+	}
+
+	@Override
+	public Date likeMember(Map<String, Object> map) {
+		return dao.likeMember(map);
+	}
+
+	@Override
+	public int insertLike(Map<String, Object> map) {
+		return dao.insertLike(map);
 	}
 
 }
