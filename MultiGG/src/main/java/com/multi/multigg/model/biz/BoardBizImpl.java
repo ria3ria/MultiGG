@@ -51,4 +51,9 @@ public class BoardBizImpl implements BoardBiz {
 		return dao.saveFile(path, uploadFile);
 	}
 
+	@Override
+	public List<BoardDto> orderByView(int page) {
+		return dao.orderByView(0);
+	}
+
 }

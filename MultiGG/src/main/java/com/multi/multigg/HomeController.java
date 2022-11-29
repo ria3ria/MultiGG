@@ -43,10 +43,11 @@ public class HomeController {
 			map.put("keyword", keyword);
 			map.put("page", page);
 			model.addAttribute("list", biz.searchList(map));
-		}
+		} 
+		//조회수 정렬 
 		else if(order != null && !order.isBlank()) {
 			if(order.equals("view")) {
-				
+		      model.addAttribute("list", biz.orderByView(page));
 			}
 		}
 		else {
@@ -54,6 +55,7 @@ public class HomeController {
 		}
 		return "lol";
 	}
+	
 	
 	@RequestMapping("/login.do")
 	public String login() {

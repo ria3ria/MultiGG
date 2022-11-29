@@ -128,4 +128,21 @@ public class BoardDaoImpl implements BoardDao {
         }
         return fileNameArr;
 	}
+
+	@Override
+	public List<BoardDto> orderByView(int page) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try{
+			 list = sqlSession.selectList(NAMESPACE+"orderbyView", page*9);
+
+			} catch (Exception e) {
+			System.out.println("[error] : orderByView");
+			e.printStackTrace();
+			}
+
+			return list;
+
+			}
+
+		
 }
