@@ -13,6 +13,12 @@
 		<select id="kategorieList" parameterType="hashmap" resultType="boardDto">
 			SELECT * FROM LOLBOARD WHERE BOARDKATEGORIE = #{boardkategorie} ORDER BY BOARDNO DESC LIMIT #{page}, 9
 		</select>
+		<select id="contentCnt" parameterType="int" resultType="int">
+			SELECT COUNT(BOARDNO) FROM LOLBOARD WHERE MEMBERNO = #{memberno}
+		</select>
+		<select id="commentCnt" parameterType="int" resultType="int">
+			SELECT COUNT(MEMBERNO) FROM COMMENT WHERE MEMBERNO = #{memberno}
+		</select>
 		<select id="likeCnt" parameterType="int" resultType="int">
 			SELECT COUNT(MEMBERNO) FROM LOLBOARD_LIKE WHERE BOARDNO = #{boardno}
 		</select>

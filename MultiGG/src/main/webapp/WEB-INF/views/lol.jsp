@@ -65,6 +65,10 @@
 				<c:otherwise>
 					<input type="button" value="내정보" onclick="location.href='mypage.do'">
 					<input type="button" value="로그아웃" onclick="location.href='logout.do'">
+					<br>
+					게시글 개수: ${contentCnt }
+					<br>
+					댓글 개수: ${commentCnt }
 				</c:otherwise>
 			</c:choose>
         </div>

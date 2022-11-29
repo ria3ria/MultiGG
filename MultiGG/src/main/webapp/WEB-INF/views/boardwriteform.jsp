@@ -16,11 +16,11 @@ $(function() {
 		}
 	});
 });
+var randomFileNameArr = new Array();
 function viewImg() {
 	const files = $("#uploadFile")[0].files;
 	for(var i=0; i<files.length; i++) {
-		const fileName = files[i].name;
-		let img = $("<img>").attr("src", "./img/"+fileName).attr("alt", fileName);
+		let img = $("<img>").attr("src", "./img/"+randomFileNameArr[i]).attr("alt", files[i].name);
 		$("#content_area").append(img);
     }
 	$("#uploadFile").val("");
@@ -31,7 +31,8 @@ function fileUpload() {
     console.log(files);
     
     for(var i=0; i<files.length; i++) {
-        formData.append("uploadFile", files[i]);
+    	const file = renameFile(files[i], makeid(16) +'.'+ files[i].name.split('.').pop().toLowerCase());
+        formData.append("uploadFile", file);
     }
     
     $.ajax({
@@ -42,10 +43,11 @@ function fileUpload() {
         type: 'POST',
         success: function(fileNameArr) {
             console.log("업로드 성공");
-            viewImg();
             for(var i=0; i<fileNameArr.length; i++) {
                 console.log(fileNameArr[i]);
             }
+            randomFileNameArr = fileNameArr;
+            viewImg();
         }
     });
 }
@@ -54,6 +56,21 @@ function loadBoardContent() {
 	console.log($("#content_area").text());
 	$("input[name='boardcontent']").val($("#content_area").html());
 	return true;
+}
+function renameFile(originalFile, newName) {
+    return new File([originalFile], newName, {
+        type: originalFile.type,
+        lastModified: originalFile.lastModified,
+    });
+}
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
 }
 </script>
 </head>
