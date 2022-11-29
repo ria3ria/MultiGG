@@ -72,4 +72,14 @@ public class BoardBizImpl implements BoardBiz {
 		return dao.insertLike(map);
 	}
 
+	@Override
+	public int contentCnt(int memberno) {
+		return dao.contentCnt(memberno);
+	}
+
+	@Override
+	public int commentCnt(int memberno) {
+		return dao.commentCnt(memberno);
+	}
+
 }

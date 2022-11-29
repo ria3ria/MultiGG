@@ -18,6 +18,8 @@ public interface BoardDao {
 	public Date likeMember(Map<String, Object> map);
 	public int insertLike(Map<String, Object> map);
 	public int likeCnt(int boardno);
+	public int contentCnt(int memberno);
+	public int commentCnt(int memberno);
 	public BoardDto selectOne(int myno);
 	public int insert(BoardDto dto);
 	public int update(BoardDto dto);

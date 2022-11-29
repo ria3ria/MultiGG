@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,6 +23,7 @@ import com.multi.multigg.model.biz.BoardBiz;
 import com.multi.multigg.model.biz.CommentBiz;
 import com.multi.multigg.model.dto.BoardDto;
 import com.multi.multigg.model.dto.LolPnDto;
+import com.multi.multigg.model.dto.MemberDto;
 
 @Controller
 public class HomeController {
@@ -37,7 +39,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/lol.do")
-	public String lol(Model model, int page, String keyword, String order, String boardkategorie) {
+	public String lol(HttpSession session, Model model, int page, String keyword, String order, String boardkategorie) {
 		if(keyword != null && !keyword.isBlank()) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("keyword", keyword);
@@ -57,6 +59,11 @@ public class HomeController {
 		}
 		else {
 			model.addAttribute("list", biz.selectList(page));
+		}
+		if(session.getAttribute("login") != null) {
+			MemberDto login = (MemberDto) session.getAttribute("login");
+			model.addAttribute("contentCnt", biz.contentCnt(login.getMemberno()));
+			model.addAttribute("commentCnt", biz.commentCnt(login.getMemberno()));
 		}
 		return "lol";
 	}

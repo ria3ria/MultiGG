@@ -118,6 +118,11 @@ public class BoardDaoImpl implements BoardDao {
             
             System.out.println(multipartFile.getOriginalFilename()+" "+multipartFile.getSize()+"byte");
             
+            File folder = new File(path);
+            if(!folder.exists()) {
+            	folder.mkdirs();
+            }
+            
             File saveFile = new File(path, uploadFileName);
             
             try {
@@ -183,6 +188,34 @@ public class BoardDaoImpl implements BoardDao {
 			res = sqlSession.insert(NAMESPACE+"insertLike", map);
 		} catch (Exception e) {
 			System.out.println("[error] : insertLike");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int contentCnt(int memberno) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.selectOne(NAMESPACE+"contentCnt", memberno);
+		} catch (Exception e) {
+			System.out.println("[error] : contentCnt");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int commentCnt(int memberno) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.selectOne(NAMESPACE+"commentCnt", memberno);
+		} catch (Exception e) {
+			System.out.println("[error] : commentCnt");
 			e.printStackTrace();
 		}
 		
