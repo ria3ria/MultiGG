@@ -16,11 +16,11 @@ $(function() {
 		}
 	});
 });
+var randomFileNameArr = new Array();
 function viewImg() {
 	const files = $("#uploadFile")[0].files;
 	for(var i=0; i<files.length; i++) {
-		const fileName = files[i].name;
-		let img = $("<img>").attr("src", "./img/"+fileName).attr("alt", fileName);
+		let img = $("<img>").attr("src", "./img/"+randomFileNameArr[i]).attr("alt", files[i].name);
 		$("#content_area").append(img);
     }
 	$("#uploadFile").val("");
@@ -31,7 +31,8 @@ function fileUpload() {
     console.log(files);
     
     for(var i=0; i<files.length; i++) {
-        formData.append("uploadFile", files[i]);
+    	const file = renameFile(files[i], makeid(16) +'.'+ files[i].name.split('.').pop().toLowerCase());
+        formData.append("uploadFile", file);
     }
     
     $.ajax({
@@ -42,10 +43,11 @@ function fileUpload() {
         type: 'POST',
         success: function(fileNameArr) {
             console.log("업로드 성공");
-            viewImg();
             for(var i=0; i<fileNameArr.length; i++) {
                 console.log(fileNameArr[i]);
             }
+            randomFileNameArr = fileNameArr;
+            viewImg();
         }
     });
 }
@@ -55,16 +57,34 @@ function loadBoardContent() {
 	$("input[name='boardcontent']").val($("#content_area").html());
 	return true;
 }
+function renameFile(originalFile, newName) {
+    return new File([originalFile], newName, {
+        type: originalFile.type,
+        lastModified: originalFile.lastModified,
+    });
+}
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
 </script>
 </head>
 <body>
-	<form action="boardwrite.do" method="post" onsubmit="return loadBoardContent();">
+	<form id="writeForm" action="boardwrite.do" method="post" onsubmit="return loadBoardContent();">
 		<input type="hidden" name="boardname" value="${login.membernickname }">
-        <input type="hidden" name="boardkategorie" value="유머">
         <input type="hidden" name="boardcontent" value="">
         <input type="hidden" name="memberno" value="${login.memberno }">
         <div id="screen">
             <div id="title_area">
+            	<select name="boardkategorie" form="writeForm">
+            		<option value="유머">유머</option>
+            		<option value="질문">질문</option>
+            	</select>
                 제목:<input type="text" name="boardtitle" placeholder="제목을 입력하세요...">
                 <br>
                 <input type="file" id="uploadFile" multiple accept="image/*">

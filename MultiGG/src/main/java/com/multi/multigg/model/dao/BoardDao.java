@@ -1,5 +1,6 @@
 package com.multi.multigg.model.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,12 @@ public interface BoardDao {
 	public List<BoardDto> searchList(Map<String, Object> map);
 	public List<BoardDto> orderByView(int page);
 	public List<BoardDto> orderByLike(int page);
+	public List<BoardDto> kategorieList(Map<String, Object> map);
+	public Date likeMember(Map<String, Object> map);
+	public int insertLike(Map<String, Object> map);
+	public int likeCnt(int boardno);
+	public int contentCnt(int memberno);
+	public int commentCnt(int memberno);
 	public BoardDto selectOne(int myno);
 	public int insert(BoardDto dto);
 	public int update(BoardDto dto);

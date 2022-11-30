@@ -10,6 +10,24 @@
 		<select id="searchList" parameterType="hashmap" resultType="boardDto">
 			SELECT * FROM LOLBOARD WHERE BOARDNAME LIKE CONCAT('%',#{keyword},'%') OR BOARDTITLE LIKE CONCAT('%',#{keyword},'%') OR BOARDCONTENT LIKE CONCAT('%',#{keyword},'%') ORDER BY BOARDNO DESC LIMIT #{page}, 9
 		</select>
+		<select id="kategorieList" parameterType="hashmap" resultType="boardDto">
+			SELECT * FROM LOLBOARD WHERE BOARDKATEGORIE = #{boardkategorie} ORDER BY BOARDNO DESC LIMIT #{page}, 9
+		</select>
+		<select id="contentCnt" parameterType="int" resultType="int">
+			SELECT COUNT(BOARDNO) FROM LOLBOARD WHERE MEMBERNO = #{memberno}
+		</select>
+		<select id="commentCnt" parameterType="int" resultType="int">
+			SELECT COUNT(MEMBERNO) FROM COMMENT WHERE MEMBERNO = #{memberno}
+		</select>
+		<select id="likeCnt" parameterType="int" resultType="int">
+			SELECT COUNT(MEMBERNO) FROM LOLBOARD_LIKE WHERE BOARDNO = #{boardno}
+		</select>
+		<select id="likeMember" parameterType="hashmap" resultType="date">
+			SELECT LIKEDATE FROM LOLBOARD_LIKE WHERE MEMBERNO = #{memberno} AND BOARDNO = #{boardno}
+		</select>
+		<insert id="insertLike" parameterType="hashmap">
+			INSERT INTO LOLBOARD_LIKE VALUES(#{boardno}, #{memberno}, NOW())
+		</insert>
 		<select id="selectOne" parameterType="int" resultType="boardDto">
 			SELECT * FROM LOLBOARD WHERE BOARDNO= #{boardno}
 		</select>
@@ -29,7 +47,7 @@
 			INSERT INTO LOLBOARD VALUES(#{boardkategorie}, NULL, #{boardname}, #{boardtitle}, #{boardcontent}, NOW(), 0, 0, #{memberno}, NOW())
 		</insert>
 		<update id="update" parameterType="boardDto">
-			UPDATE LOLBOARD SET BOARDTITLE=#{boardtitle}, BOARDCONTENT=#{boardcontent}, BOARDMDFDATE=NOW() WHERE BOARDNO=#{boardno}
+			UPDATE LOLBOARD SET BOARDTITLE=#{boardtitle}, BOARDCONTENT=#{boardcontent}, BOARDLIKE=#{boardlike}, BOARDMDFDATE=NOW() WHERE BOARDNO=#{boardno}
 		</update>
 		<delete id="delete" parameterType="int">
 			DELETE FROM LOLBOARD WHERE BOARDNO=#{boardno}

@@ -2,6 +2,7 @@ package com.multi.multigg.model.dao;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +48,6 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public int insert(BoardDto dto) {
-		System.out.println(dto.toString());
 		int res = 0;
 		
 		try {
@@ -95,8 +95,8 @@ public class BoardDaoImpl implements BoardDao {
 			if(map.containsKey("page")) {
 				int page = Integer.parseInt(map.get("page")+"")*9;
 				map.put("page", page);
+				list = sqlSession.selectList(NAMESPACE+"searchList", map);
 			}
-			list = sqlSession.selectList(NAMESPACE+"searchList", map);
 		} catch (Exception e) {
 			System.out.println("[error] : search list");
 			e.printStackTrace();
@@ -117,6 +117,11 @@ public class BoardDaoImpl implements BoardDao {
             uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
             
             System.out.println(multipartFile.getOriginalFilename()+" "+multipartFile.getSize()+"byte");
+            
+            File folder = new File(path);
+            if(!folder.exists()) {
+            	folder.mkdirs();
+            }
             
             File saveFile = new File(path, uploadFileName);
             
@@ -158,5 +163,92 @@ public class BoardDaoImpl implements BoardDao {
 		
 	}
 
+
+	
+	public List<BoardDto> kategorieList(Map<String, Object> map) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
 		
+		try {
+			if(map.containsKey("page")) {
+				int page = Integer.parseInt(map.get("page")+"")*9;
+				map.put("page", page);
+				list = sqlSession.selectList(NAMESPACE+"kategorieList", map);
+			}
+		} catch (Exception e) {
+			System.out.println("[error] : kategorie list");
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public int likeCnt(int boardno) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.selectOne(NAMESPACE+"likeCnt", boardno);
+		} catch (Exception e) {
+			System.out.println("[error] : likeCnt");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public Date likeMember(Map<String, Object> map) {
+		Date res = null;
+		
+		try {
+			res = sqlSession.selectOne(NAMESPACE+"likeMember", map);
+		} catch (Exception e) {
+			System.out.println("[error] : likeMember");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int insertLike(Map<String, Object> map) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.insert(NAMESPACE+"insertLike", map);
+		} catch (Exception e) {
+			System.out.println("[error] : insertLike");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int contentCnt(int memberno) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.selectOne(NAMESPACE+"contentCnt", memberno);
+		} catch (Exception e) {
+			System.out.println("[error] : contentCnt");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int commentCnt(int memberno) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.selectOne(NAMESPACE+"commentCnt", memberno);
+		} catch (Exception e) {
+			System.out.println("[error] : commentCnt");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
 }
