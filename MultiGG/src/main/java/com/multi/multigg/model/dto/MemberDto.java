@@ -2,6 +2,8 @@ package com.multi.multigg.model.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class MemberDto {
 	private int memberno;
 	private String memberemail;
@@ -10,6 +12,7 @@ public class MemberDto {
 	private String membername;
 	private String memberlevel;
 	private Date memberdate;
+	
 	public MemberDto() {
 		super();
 	}
@@ -70,6 +73,13 @@ public class MemberDto {
 
 	public void setMembernickname(String membernickname) {
 		this.membernickname = membernickname;
+	}
+
+
+	public MemberDto(int memberno, String memberpw) {
+		super();
+		this.memberno = memberno;
+		this.memberpw = memberpw;
 	}
 	
 }

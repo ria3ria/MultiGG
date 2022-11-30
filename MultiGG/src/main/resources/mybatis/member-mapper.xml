@@ -15,12 +15,26 @@
  		<select id="idCheck" resultType="int">
 		SELECT COUNT(*) FROM MEMBER WHERE MEMBEREMAIL = #{memberemail}
 		</select>
- 		
+ 		<select id="nickCheck" resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE MEMBERNICKNAME = #{membernickname}
+		</select>
+		
  		<select id="pwCheck" resultType="String">
 			SELECT MEMBERPW FROM MEMBER WHERE MEMBEREMAIL = #{memberemail}
 		</select>
 		
-		<update id="pwUpdate">
-			UPDATE MEMBER SET MEMBERPW = #{memberpw} WHERE MEMBEREMAIL = #{memberemail}
+		<select id="getMemberemail" >
+			SELECT * FROM MEMBER WHERE MEMBEREMAIL = #{memberemail}
+		</select>
+		<select id="getMemberpw" >
+			SELECT * FROM MEMBER WHERE MEMBERPW = #{memberpw}
+		</select>
+		
+		
+		<update id="modifyPw">
+			UPDATE MEMBER SET MEMBERPW = #{memberpw} WHERE MEMBERNO = #{memberno}
+		</update>
+		<update id="infoUpdate">
+			UPDATE MEMBER SET MEMBERNICKNAME =#{membernickname}, MEMBERNAME =#{membername} WHERE MEMBEREMAIL = #{memberemail}
 		</update>
 </mapper> 

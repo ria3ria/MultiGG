@@ -21,7 +21,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 				request.getRequestURI().contains("/lol.do") ||
 				request.getRequestURI().contains("/recode.do") ||
 				request.getRequestURI().contains("/main.do") ||
-				request.getRequestURI().contains("/idChk.do")
+				request.getRequestURI().contains("/idChk.do") ||
+				request.getRequestURI().contains("/nickChk.do") ||
+				request.getRequestURI().contains("/checkPw.do")
 				) {
 				return true;
 			}
