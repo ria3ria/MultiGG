@@ -21,5 +21,18 @@ public class MemberBizImpl implements MemberBiz {
 	public int insert(MemberDto dto) {
 		return dao.insert(dto);
 	}
+
+	@Override
+	public int idCheck(String memberemail) {
+		return dao.idCheck(memberemail);
+	}
+	@Override
+	public String pwCheck(String memberemail){
+		return dao.pwCheck(memberemail);
+	}
 	
+	@Override
+	public void pwUpdate(String memberemail, String hashedPw){
+		dao.pwUpdate(memberemail, hashedPw);
+	}
 }

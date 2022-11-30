@@ -1,5 +1,8 @@
 package com.multi.multigg.model.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -39,5 +42,30 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return res;
 	}
+
+	@Override
+	public int idCheck(String memberemail) {
+		int res = 0;
+		try {
+			res = sqlSession.selectOne(NAMESPACE+"idCheck", memberemail);	
+		} catch (Exception e) {
+			System.out.println("[error] : member idCheck");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	@Override
+	public String pwCheck(String memberemail){
+		return sqlSession.selectOne(NAMESPACE+"pwCheck", memberemail);
+	}
 	
+	@Override
+	public void pwUpdate(String memberemail, String hashedPw){
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("memberemail", memberemail);
+		map.put("memberPw", hashedPw);
+		sqlSession.update(NAMESPACE+"pwUpdate", map);
+		
+	}
 }

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
@@ -16,12 +17,27 @@
 		paramObj = get_query();
 	});
 	function nextPage() {
+		let url = "lol.do?";
 		if(paramObj['page'] > 0) {
-			location.href='lol.do?page=' + (parseInt(paramObj['page'])-1);
+			url += '&page=' + (parseInt(paramObj['page'])-1);
 		}
+		else {
+			return;
+		}
+		location.href = get_url(url);
 	}
 	function prevPage() {
-		location.href='lol.do?page=' + (parseInt(paramObj['page'])+1);
+		let url = 'lol.do?page=' + (parseInt(paramObj['page'])+1);
+		location.href = get_url(url);
+	}
+	function get_url(url) {
+		if(paramObj['keyword'] != null && paramObj['keyword'] != "") {
+			url += '&keyword=' + paramObj['keyword'];
+		}
+		if(paramObj['boardkategorie'] != null && paramObj['boardkategorie'] != "") {
+			url += '&boardkategorie=' + paramObj['boardkategorie'];
+		}
+		return url;
 	}
 	function get_query() {
 	    var url = document.location.href;
@@ -32,23 +48,39 @@
 	    }
 	    return result;
 	}
+	function search() {
+		location.href = 'lol.do?page=0&keyword=' + $("#keyword").val();
+	}
 </script>
 </head>
 <body>
 	<div id="screen">
         <div id="header">header</div>
-        <div id="userInfo">userInfo</div>
+        <div id="userInfo">
+        	<p>내 정보</p>
+        	<c:choose>
+				<c:when test="${empty login }">
+					<input type="button" value="로그인" onclick="location.href='loginform.do'">
+				</c:when>
+				<c:otherwise>
+					<input type="button" value="내정보" onclick="location.href='mypage.do'">
+					<input type="button" value="로그아웃" onclick="location.href='logout.do'">
+					<br>
+					게시글 개수: ${contentCnt }
+					<br>
+					댓글 개수: ${commentCnt }
+				</c:otherwise>
+			</c:choose>
+        </div>
         <div id="board_body">
             <div id="board_top">
                 <input type="button" value="글쓰기" onclick="location.href='boardwriteform.do'">
                 <input type="button" value="글정렬">
-                <form action="boardsearch.do">
-	                <input type="text" name="keyword" placeholder="검색어 입력">
-	                <input type="submit" value="글검색">
-	                <br>
-	                <input type="button" value="다음 페이지로" onclick="nextPage();">
-	                <input type="button" value="이전 페이지로" onclick="prevPage();">
-                </form>
+				<input type="text" id="keyword" placeholder="검색어 입력">
+				<input type="button" value="글검색" onclick="search();">
+				<br>
+				<input type="button" value="다음 페이지로" onclick="nextPage();">
+				<input type="button" value="이전 페이지로" onclick="prevPage();">
             </div>
             <div id="board_bottom">
                 <div id="board_list_area">
@@ -79,7 +111,15 @@
 									<li>
 			                            <p class="boardno">${dto.boardno }</p>
 			                            <p class="boardkategorie">${dto.boardkategorie }</p>
-			                            <p class="boardtitle"><a href="boarddetail.do?boardno=${dto.boardno }">${dto.boardtitle }</a></p>
+		                            	<c:set var = "content" value = "${dto.boardcontent }"></c:set>
+			                            <c:choose>
+			                            	<c:when test="${fn:contains(content, '<img src=')}">
+					                            <p class="boardtitle"><a href="boarddetail.do?boardno=${dto.boardno }">${dto.boardtitle }(사진)</a></p>
+			                            	</c:when>
+			                            	<c:otherwise>
+					                            <p class="boardtitle"><a href="boarddetail.do?boardno=${dto.boardno }">${dto.boardtitle }</a></p>
+			                            	</c:otherwise>
+			                            </c:choose>
 			                            <p class="boardname">${dto.boardname }</p>
 			                            <fmt:formatDate var="date" value="${dto.boarddate }" pattern="yy/MM/dd"/>
 			                            <p class="boarddate">${date }</p>
@@ -93,6 +133,10 @@
                 </div>
             </div>
         </div>
-        <div id="kategorie">kategorie</div>
+        <div id="kategorie">
+			<a href='lol.do?page=0'>전체보기</a><br>
+			<a href='lol.do?page=0&boardkategorie=유머'>유머</a><br>
+			<a href='lol.do?page=0&boardkategorie=질문'>질문</a>
+        </div>
     </div>
 </html>

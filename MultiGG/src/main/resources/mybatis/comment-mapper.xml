@@ -8,12 +8,15 @@
 			SELECT * FROM COMMENT WHERE BOARDNO=#{boarno} ORDER BY COMMENTNO DESC
 		</select>
 		<insert id="insert" parameterType="commentDto">
-			INSERT INTO COMMENT VALUES(NULL,#{boardno},#{commentwriter},#{commenttitle},0,0, NOW())
+			INSERT INTO COMMENT VALUES(NULL,#{memberno},#{boardno},#{commentwriter},#{commenttitle},0,0, NOW())
 		
 		</insert>
 		<update id="update" parameterType="commentDto">
 			UPDATE COMMENT SET COMMENTTITLE=#{commenttitle} WHERE COMMENTNO=#{commentno}
 		</update>
+		<delete id="delete" parameterType="int">
+			DELETE FROM COMMENT WHERE COMMENTNO=#{commentno}
+		</delete>
 		
 		
 </mapper>

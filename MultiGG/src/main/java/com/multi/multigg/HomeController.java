@@ -1,6 +1,7 @@
 package com.multi.multigg;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -25,6 +33,7 @@ import com.multi.multigg.model.biz.BoardBiz;
 import com.multi.multigg.model.biz.CommentBiz;
 import com.multi.multigg.model.dto.BoardDto;
 import com.multi.multigg.model.dto.LolPnDto;
+import com.multi.multigg.model.dto.MemberDto;
 
 @Controller
 public class HomeController {
@@ -40,14 +49,32 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/lol.do")
-	public String lol(Model model, int page) {
-		model.addAttribute("list", biz.selectList(page));
-		return "lol";
-	}
-	
-	@RequestMapping("/boardsearch.do")
-	public String boardsearch(Model model, String keyword) {
-		model.addAttribute("list", biz.searchList(keyword));
+	public String lol(HttpSession session, Model model, int page, String keyword, String order, String boardkategorie) {
+		if(keyword != null && !keyword.isBlank()) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("keyword", keyword);
+			map.put("page", page);
+			model.addAttribute("list", biz.searchList(map));
+		}
+		else if(order != null && !order.isBlank()) {
+			if(order.equals("view")) {
+				
+			}
+		}
+		else if(boardkategorie != null && !boardkategorie.isBlank()) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("boardkategorie", boardkategorie);
+			map.put("page", page);
+			model.addAttribute("list", biz.kategorieList(map));
+		}
+		else {
+			model.addAttribute("list", biz.selectList(page));
+		}
+		if(session.getAttribute("login") != null) {
+			MemberDto login = (MemberDto) session.getAttribute("login");
+			model.addAttribute("contentCnt", biz.contentCnt(login.getMemberno()));
+			model.addAttribute("commentCnt", biz.commentCnt(login.getMemberno()));
+		}
 		return "lol";
 	}
 	
@@ -94,6 +121,8 @@ public class HomeController {
 		BoardDto dto = biz.selectOne(boardno);
 		//뎃글 모여주기 기능
 		model.addAttribute("commentList",commentBiz.selectList(dto.getBoardno()));
+		
+
 				
 		return "boarddetail";
 	}
@@ -108,6 +137,20 @@ public class HomeController {
 		else {
 			return "redirect:boarddetail.do?boardno="+boardno;
 		}
+	}
+	
+	@RequestMapping("/boardlike.do")
+	public String boardLike(int boardno, int memberno) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("boardno", boardno);
+		map.put("memberno", memberno);
+		if(biz.likeMember(map) == null) {
+			biz.insertLike(map);
+			BoardDto dto = biz.selectOne(boardno);
+			dto.setBoardlike(biz.likeCnt(boardno));
+			biz.update(dto);
+		}
+		return "redirect:boarddetail.do?boardno="+boardno;
 	}
 	
 	@RequestMapping("/recode.do")

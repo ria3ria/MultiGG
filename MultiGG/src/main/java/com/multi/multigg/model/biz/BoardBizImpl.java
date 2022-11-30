@@ -1,6 +1,8 @@
 package com.multi.multigg.model.biz;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,13 +43,43 @@ public class BoardBizImpl implements BoardBiz {
 	}
 
 	@Override
-	public List<BoardDto> searchList(String keyword) {
-		return dao.searchList(keyword);
+	public List<BoardDto> searchList(Map<String, Object> map) {
+		return dao.searchList(map);
 	}
 
 	@Override
 	public String[] saveFile(String path, MultipartFile[] uploadFile) {
 		return dao.saveFile(path, uploadFile);
+	}
+
+	@Override
+	public List<BoardDto> kategorieList(Map<String, Object> map) {
+		return dao.kategorieList(map);
+	}
+
+	@Override
+	public int likeCnt(int boardno) {
+		return dao.likeCnt(boardno);
+	}
+
+	@Override
+	public Date likeMember(Map<String, Object> map) {
+		return dao.likeMember(map);
+	}
+
+	@Override
+	public int insertLike(Map<String, Object> map) {
+		return dao.insertLike(map);
+	}
+
+	@Override
+	public int contentCnt(int memberno) {
+		return dao.contentCnt(memberno);
+	}
+
+	@Override
+	public int commentCnt(int memberno) {
+		return dao.commentCnt(memberno);
 	}
 
 }
