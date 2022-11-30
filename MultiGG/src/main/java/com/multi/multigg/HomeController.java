@@ -1,11 +1,21 @@
 package com.multi.multigg;
 
 import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -145,6 +155,7 @@ public class HomeController {
 	
 	@RequestMapping("/recode.do")
 	public String recode() {
+
 		return "recode";
 	}
 	
@@ -161,13 +172,10 @@ public class HomeController {
 		
 		Elements ele = doc.select("#patch-notes-container > div:nth-child(10)");
 		
-		
 		System.out.println(ele.select("h4").text());
 		System.out.println(ele.select("span").text());
 		System.out.println(ele.select("li").text());
-		
 		System.out.println(ele.select("a"));
-		
 		
 		LolPnDto dto = new LolPnDto();
 		dto.setTitle(ele.select("h4").text());
@@ -190,4 +198,45 @@ public class HomeController {
 	public String[] fileUploadAjax(HttpServletRequest request, Model model, MultipartFile[] uploadFile) {
 		return biz.saveFile(request.getSession().getServletContext().getRealPath("/")+"img", uploadFile);
     }
+	
+	@RequestMapping(value="/craw_select.do")
+    @ResponseBody
+    public Map<String,Object> craw_select(String user_id, HttpServletRequest request, HttpServletResponse response)throws Exception {
+		String url = "https://www.op.gg/summoners/kr/"+user_id;
+        Document doc = null;
+        
+        try {
+			doc = Jsoup.connect(url).get();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}				
+        
+        Elements ele = null;
+        ele = doc.select("div.champion-box");
+        
+        Elements elem = null;
+        Map<String,Object> res = new HashMap<String, Object>();
+        //System.out.println(ele.size());
+        for(int i=1; i<ele.size()+1; i++) {	
+        	elem = doc.select("#content-container > div:nth-child(1) > div.css-e9xk5o.e1g7spwk3 > div > div:nth-child("+i+")");
+        
+        	List<String> NameResult = new ArrayList<>();
+        	List<String> PlayedResult = new ArrayList<>();
+        	NameResult.add(elem.select(".name").text());
+        	PlayedResult.add(elem.select(".kda").text());
+        	PlayedResult.add(elem.select(".played").text());
+        
+        	Map<String,Object> resultMap = new HashMap<String,Object>();
+        	resultMap.put("NameResult", NameResult);
+        	resultMap.put("PlayedResult", PlayedResult);
+        	System.out.println(resultMap+" : " + i);
+        
+        	res.put("champ"+i, resultMap);
+        }
+		return res;
+    }
+	
+	
+	
+	
 }
