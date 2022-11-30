@@ -48,9 +48,10 @@ public class HomeController {
 		else if(order != null && !order.isBlank()) {
 			if(order.equals("view")) {
 		      model.addAttribute("list", biz.orderByView(page));
-			}
+			}else if(order.equals("like")){
+				model.addAttribute("list",biz.orderByLike(page));
 		}
-		else {
+		}else {
 			model.addAttribute("list", biz.selectList(page));
 		}
 		return "lol";

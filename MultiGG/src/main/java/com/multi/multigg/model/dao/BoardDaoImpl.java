@@ -144,5 +144,19 @@ public class BoardDaoImpl implements BoardDao {
 
 			}
 
+	@Override
+	public List<BoardDto> orderByLike(int page) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try{
+		 list = sqlSession.selectList(NAMESPACE+"orderbyLike", page*9);
+
+		} catch (Exception e) {
+		System.out.println("[error] : orderByLike");
+		e.printStackTrace();
+		}
+		return list;
+		
+	}
+
 		
 }

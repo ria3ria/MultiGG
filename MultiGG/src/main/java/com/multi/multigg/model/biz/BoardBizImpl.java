@@ -56,4 +56,10 @@ public class BoardBizImpl implements BoardBiz {
 		return dao.orderByView(page);
 	}
 
+	@Override
+	public List<BoardDto> orderByLike(int page) {
+		return dao.orderByLike(page);
+	}
+	
+
 }

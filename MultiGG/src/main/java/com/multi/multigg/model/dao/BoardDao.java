@@ -14,6 +14,7 @@ public interface BoardDao {
 	public List<BoardDto> selectList(int page);
 	public List<BoardDto> searchList(Map<String, Object> map);
 	public List<BoardDto> orderByView(int page);
+	public List<BoardDto> orderByLike(int page);
 	public BoardDto selectOne(int myno);
 	public int insert(BoardDto dto);
 	public int update(BoardDto dto);
