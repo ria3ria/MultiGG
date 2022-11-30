@@ -15,11 +15,11 @@
 		</select>
 		
 		<select id="orderbyView" parameterType="int" resultType="boardDto">
-			SELECET * FORM LOLBOARD ORDER BY BOARDVIEW DESC
+			SELECET * FORM LOLBOARD ORDER BY BOARDVIEW DESC LIMIT #{page},9
 		</select>
 		
 		<select id="orderbyLike" parameterType="int" resultType="boardDto">
-			SELECET * FORM LOLBOARD ORDER BY BOARDLIKE DESC
+			SELECET * FORM LOLBOARD ORDER BY BOARDLIKE DESC LIMIT #{page},9
 		</select>
 		
 		

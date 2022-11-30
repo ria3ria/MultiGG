@@ -53,7 +53,7 @@ public class BoardBizImpl implements BoardBiz {
 
 	@Override
 	public List<BoardDto> orderByView(int page) {
-		return dao.orderByView(0);
+		return dao.orderByView(page);
 	}
 
 }
