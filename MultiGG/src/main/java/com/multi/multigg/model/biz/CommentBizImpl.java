@@ -31,9 +31,9 @@ public class CommentBizImpl implements CommentBiz{
 	}
 
 	@Override
-	public int delete(int myno) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int delete(int commentno) {
+		
+		return dao.delete(commentno);
 	}
 
 }

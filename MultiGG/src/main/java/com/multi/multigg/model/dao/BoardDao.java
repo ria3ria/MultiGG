@@ -1,6 +1,8 @@
 package com.multi.multigg.model.dao;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,7 +13,13 @@ public interface BoardDao {
 	String NAMESPACE = "board.";
 	
 	public List<BoardDto> selectList(int page);
-	public List<BoardDto> searchList(String keyword);
+	public List<BoardDto> searchList(Map<String, Object> map);
+	public List<BoardDto> kategorieList(Map<String, Object> map);
+	public Date likeMember(Map<String, Object> map);
+	public int insertLike(Map<String, Object> map);
+	public int likeCnt(int boardno);
+	public int contentCnt(int memberno);
+	public int commentCnt(int memberno);
 	public BoardDto selectOne(int myno);
 	public int insert(BoardDto dto);
 	public int update(BoardDto dto);

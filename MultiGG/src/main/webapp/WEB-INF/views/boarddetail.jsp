@@ -44,8 +44,15 @@
 		</div>
 		<div id="board_footer_area">
 			<input type="button" value="목록" onclick="location.href='lol.do?page=0'">
-			<input type="button" value="수정" onclick="location.href='boardupdateform.do?boardno=${dto.boardno}'">
-			<input type="button" value="삭제" onclick="location.href='boarddelete.do?boardno=${dto.boardno}'">
+			<c:choose>
+				<c:when test="${not empty login and dto.memberno eq login.memberno }">
+					<input type="button" value="수정" onclick="location.href='boardupdateform.do?boardno=${dto.boardno}'">
+					<input type="button" value="삭제" onclick="location.href='boarddelete.do?boardno=${dto.boardno}'">
+				</c:when>
+				<c:otherwise>
+					<input type="button" value="추천" onclick="location.href='boardlike.do?boardno=${dto.boardno}&memberno=${login.memberno }'">
+				</c:otherwise>
+			</c:choose>
 			<input type="button" value="댓글" onclick="commentShow();">
 		</div>
 	</div>
@@ -85,15 +92,15 @@
 									<td>${commentdto.commentwriter }</td>
 									<td><textarea id="commenttitle"rows="5" cols="100" readonly="readonly" name="commenttitle">${commentdto.commenttitle }</textarea></td>
 									<td>${commentdto.commentdate }</td>
-									<td>${commentdto.commentgood }<input type="button" value="추천" ></td>
-									<td>${commentdto.commentbad }<input type="button" value="비추천"></td>
+									<td>${commentdto.commentgood }<input type="button" value="추천" onclick="location.href='commentrecommend.do?membernickname=${login.membernickname}&commentno=${commentdto.commentno}&recommend=1&boardno=${dto.boardno }'"></td>
+									<td>${commentdto.commentbad }<input type="button" value="비추천" onclick="location.href='commentrecommend.do?membernickname=${login.membernickname}&commentno=${commentdto.commentno}&recommend=-1&boardno=${dto.boardno }'"></td>
 								</tr>
 								
 								<tr>
 									<th colspan="6" align="right">
 										<input id="commentupdateform" type="button" value="수정" style="display: true" onclick="commentUpdateForm();">
 										<input id="commentupdate" type="submit" value="수정 완료" style="display: none" >
-										<input type="button" value="삭제">
+										<input type="button" value="삭제" onclick="location.href='commentdelete.do?commentno=${commentdto.commentno}&boardno=${dto.boardno }'">
 									</th>
 								</tr>
 							</form>
@@ -111,6 +118,7 @@
 		
 		<form action="commentinsert.do" method="post">
 			<input type="hidden" name="boardno" value="${dto.boardno }">
+			<input type="hidden" name="memberno" value="${login.memberno }">
 			<table id="commentwrite" border="1" style="display:none" >
 				<tr>
 					<th>WRITER</th>
