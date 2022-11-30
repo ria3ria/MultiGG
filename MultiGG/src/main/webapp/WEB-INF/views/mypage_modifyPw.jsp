@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>MULTI.GG 비밀번호 변경</title>
-<link href="css/modifyPw.css" rel="stylesheet" type="text/css">
+<link href="css/style_modifyPw.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
 
