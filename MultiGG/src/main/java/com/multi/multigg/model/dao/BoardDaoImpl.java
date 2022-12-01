@@ -83,6 +83,8 @@ public class BoardDaoImpl implements BoardDao {
 		
 		try {
 			res = sqlSession.delete(NAMESPACE+"delete", boardno);
+			//개시글이 삭제되면 그 밑에 있던 댓글도 삭제된다.
+			sqlSession.delete(NAMESPACE+"deletecomment", boardno);
 		} catch (Exception e) {
 			System.out.println("[error] delete");
 			e.printStackTrace();

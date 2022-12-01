@@ -40,7 +40,7 @@
             success:function(msg){
                console.log(msg);
                if(msg.check == true){
-            	   location.href="./index.jsp";
+            	   location.href="lol.do?page=0";
                }else{
             	   $("#loginChk").show();
             	   $("#loginChk").html("ID 혹은 PW가 잘못되었습니다").css("color","red");
