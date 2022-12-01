@@ -45,10 +45,10 @@ public class CommentComtroller {
 	}
 	
 	@RequestMapping("commentdelete.do")
-	public String commentdelete(int commentno, int boardno) {
+	public String commentdelete(int commentno, int boardno, int memberno) {
 	
 		
-		commentBiz.delete(commentno);
+		commentBiz.delete(commentno,memberno);
 		
 		
 		return "redirect:boarddetail.do?boardno="+boardno;

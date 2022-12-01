@@ -53,6 +53,15 @@ public class BoardBizImpl implements BoardBiz {
 	}
 
 	@Override
+	public List<BoardDto> orderByView(int page) {
+		return dao.orderByView(page);
+	}
+
+	@Override
+	public List<BoardDto> orderByLike(int page) {
+		return dao.orderByLike(page);
+	}
+	
 	public List<BoardDto> kategorieList(Map<String, Object> map) {
 		return dao.kategorieList(map);
 	}
@@ -86,5 +95,7 @@ public class BoardBizImpl implements BoardBiz {
 	public int boardCommentCnt(int boardno) {
 		return dao.boardCommentCnt(boardno);
 	}
+
+	
 
 }

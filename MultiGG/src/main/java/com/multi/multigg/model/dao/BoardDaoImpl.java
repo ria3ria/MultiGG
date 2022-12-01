@@ -36,14 +36,17 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public BoardDto selectOne(int boardno) {
 		BoardDto dto = null;
-		
+		int res = 0;
 		try {
-			dto = sqlSession.selectOne(NAMESPACE + "selectOne", boardno);
+			res = sqlSession.update(NAMESPACE+"pageview", boardno);
+			if(res>0) {
+				dto = sqlSession.selectOne("board.selectOne", boardno);
+			}
 		} catch (Exception e) {
 			System.out.println("[error] : select one");
 			e.printStackTrace();
 		}
-		return dto;
+		return dto; 
 	}
 
 	@Override
@@ -135,6 +138,36 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
+	public List<BoardDto> orderByView(int page) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try{
+			 list = sqlSession.selectList(NAMESPACE+"orderbyView", page*9);
+			 System.out.println(list);
+			} catch (Exception e) {
+			System.out.println("[error] : orderByView");
+			e.printStackTrace();
+			}
+
+			return list;
+
+			}
+
+	@Override
+	public List<BoardDto> orderByLike(int page) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try{
+		 list = sqlSession.selectList(NAMESPACE+"orderbyLike", page*9);
+
+		} catch (Exception e) {
+		System.out.println("[error] : orderByLike");
+		e.printStackTrace();
+		}
+		return list;
+		
+	}
+
+
+	
 	public List<BoardDto> kategorieList(Map<String, Object> map) {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		
@@ -235,4 +268,5 @@ public class BoardDaoImpl implements BoardDao {
 		
 		return res;
 	}
+
 }

@@ -10,6 +10,6 @@ public interface CommentBiz {
 	public List<CommentDto> selectList(int boardno);
 	public int insert(CommentDto dto);
 	public int update(CommentDto dto);
-	public int delete(int myno);
+	public int delete(int myno,int memberno);
 
 }

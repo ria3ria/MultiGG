@@ -87,20 +87,23 @@
 							<form action="commentupdate.do" method="post">
 								<input type="hidden" name="commentno" value="${commentdto.commentno}">
 								<input type="hidden" name="boardno" value="${dto.boardno }">
+								
 								<tr>
 									<td>${commentdto.commentno}</td>
 									<td>${commentdto.commentwriter }</td>
 									<td><textarea id="commenttitle"rows="5" cols="100" readonly="readonly" name="commenttitle">${commentdto.commenttitle }</textarea></td>
 									<td>${commentdto.commentdate }</td>
-									<td>${commentdto.commentgood }<input type="button" value="추천" onclick="location.href='commentrecommend.do?membernickname=${login.membernickname}&commentno=${commentdto.commentno}&recommend=1&boardno=${dto.boardno }'"></td>
-									<td>${commentdto.commentbad }<input type="button" value="비추천" onclick="location.href='commentrecommend.do?membernickname=${login.membernickname}&commentno=${commentdto.commentno}&recommend=-1&boardno=${dto.boardno }'"></td>
+									<td>${commentdto.commentgood }<input type="button" value="추천" onclick="location.href='commentrecommend.do?memberno=${login.memberno}&commentno=${commentdto.commentno}&recommend=1&boardno=${dto.boardno }'"></td>
+									<td>${commentdto.commentbad }<input type="button" value="비추천" onclick="location.href='commentrecommend.do?memberno=${login.memberno}&commentno=${commentdto.commentno}&recommend=-1&boardno=${dto.boardno }'"></td>
 								</tr>
 								
 								<tr>
 									<th colspan="6" align="right">
-										<input id="commentupdateform" type="button" value="수정" style="display: true" onclick="commentUpdateForm();">
-										<input id="commentupdate" type="submit" value="수정 완료" style="display: none" >
-										<input type="button" value="삭제" onclick="location.href='commentdelete.do?commentno=${commentdto.commentno}&boardno=${dto.boardno }'">
+										<c:if test="${login.memberno == commentdto.memberno }">
+											<input id="commentupdateform" type="button" value="수정" style="display: true" onclick="commentUpdateForm();">
+											<input id="commentupdate" type="submit" value="수정 완료" style="display: none" >
+											<input type="button" value="삭제" onclick="location.href='commentdelete.do?commentno=${commentdto.commentno}&boardno=${dto.boardno }&memberno=${login.memberno }'">
+										</c:if>
 									</th>
 								</tr>
 							</form>
@@ -122,7 +125,7 @@
 			<table id="commentwrite" border="1" style="display:none" >
 				<tr>
 					<th>WRITER</th>
-					<td><input type="text" name="commentwriter"></td>
+					<td><input type="text" name="commentwriter" value="${login.membernickname }" readonly="readonly"></td>
 				</tr>
 				<tr>
 					<th>TITLE</th>

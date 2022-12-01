@@ -62,19 +62,15 @@ public class HomeController {
 			map.put("keyword", keyword);
 			map.put("page", page);
 			model.addAttribute("list", biz.searchList(map));
-		}
+		} 
+		//조회수 정렬 
 		else if(order != null && !order.isBlank()) {
 			if(order.equals("view")) {
-				
-			}
+		      model.addAttribute("list", biz.orderByView(page));
+			}else if(order.equals("like")){
+				model.addAttribute("list",biz.orderByLike(page));
 		}
-		else if(boardkategorie != null && !boardkategorie.isBlank()) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("boardkategorie", boardkategorie);
-			map.put("page", page);
-			model.addAttribute("list", biz.kategorieList(map));
-		}
-		else {
+		}else {
 			model.addAttribute("list", biz.selectList(page));
 		}
 		if(session.getAttribute("login") != null) {
@@ -90,6 +86,7 @@ public class HomeController {
 		}
 		return "lol";
 	}
+	
 	
 	@RequestMapping("/login.do")
 	public String login() {
@@ -125,20 +122,22 @@ public class HomeController {
 		else {
 			return "redirect:boardupdateform.do?boardno="+dto.getBoardno();
 		}
-	}
-	
+	} 
+
+
 	@RequestMapping("/boarddetail.do")
 	public String boardDetail(Model model, int boardno) {
 		model.addAttribute("dto", biz.selectOne(boardno));
 		
-		BoardDto dto = biz.selectOne(boardno);
+		//BoardDto dto = biz.selectOne(boardno);
 		//뎃글 모여주기 기능
-		model.addAttribute("commentList",commentBiz.selectList(dto.getBoardno()));
+		model.addAttribute("commentList",commentBiz.selectList(boardno));		
 		
-
-				
+			
 		return "boarddetail";
 	}
+
+	
 	
 	@RequestMapping("/boarddelete.do")
 	public String boardDelete(int boardno) {
