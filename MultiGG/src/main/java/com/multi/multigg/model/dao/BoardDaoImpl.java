@@ -209,13 +209,27 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public int commentCnt(int memberno) {
+	public int memberCommentCnt(int memberno) {
 		int res = 0;
 		
 		try {
-			res = sqlSession.selectOne(NAMESPACE+"commentCnt", memberno);
+			res = sqlSession.selectOne(NAMESPACE+"memberCommentCnt", memberno);
 		} catch (Exception e) {
-			System.out.println("[error] : commentCnt");
+			System.out.println("[error] : memberCommentCnt");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int boardCommentCnt(int boardno) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.selectOne(NAMESPACE+"boardCommentCnt", boardno);
+		} catch (Exception e) {
+			System.out.println("[error] : boardCommentCnt");
 			e.printStackTrace();
 		}
 		

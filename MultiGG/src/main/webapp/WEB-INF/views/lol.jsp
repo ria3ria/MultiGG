@@ -124,10 +124,10 @@
 		                            	<c:set var = "content" value = "${dto.boardcontent }"></c:set>
 			                            <c:choose>
 			                            	<c:when test="${fn:contains(content, '<img src=')}">
-					                            <p class="boardtitle"><a href="boarddetail.do?boardno=${dto.boardno }">${dto.boardtitle }(사진)</a></p>
+					                            <p class="boardtitle"><a href="boarddetail.do?boardno=${dto.boardno }">${dto.boardtitle }(사진)[${dto.commentCnt }]</a></p>
 			                            	</c:when>
 			                            	<c:otherwise>
-					                            <p class="boardtitle"><a href="boarddetail.do?boardno=${dto.boardno }">${dto.boardtitle }</a></p>
+					                            <p class="boardtitle"><a href="boarddetail.do?boardno=${dto.boardno }">${dto.boardtitle }[${dto.commentCnt }]</a></p>
 			                            	</c:otherwise>
 			                            </c:choose>
 			                            <p class="boardname">${dto.boardname }</p>

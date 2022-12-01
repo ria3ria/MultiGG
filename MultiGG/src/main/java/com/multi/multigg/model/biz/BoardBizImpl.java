@@ -78,8 +78,13 @@ public class BoardBizImpl implements BoardBiz {
 	}
 
 	@Override
-	public int commentCnt(int memberno) {
-		return dao.commentCnt(memberno);
+	public int memberCommentCnt(int memberno) {
+		return dao.memberCommentCnt(memberno);
+	}
+
+	@Override
+	public int boardCommentCnt(int boardno) {
+		return dao.boardCommentCnt(boardno);
 	}
 
 }
