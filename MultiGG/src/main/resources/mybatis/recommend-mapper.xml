@@ -5,7 +5,7 @@
   
 <mapper namespace="recommend">
 		<select id="selectOne" parameterType="recommendDto" resultType="recommendDto">
-			SELECT * FROM COMMENTRECOMMEND WHERE MEMBERNO=#{memberno}
+			SELECT * FROM COMMENTRECOMMEND WHERE MEMBERNO=#{memberno} AND COMMENTNO=#{commentno}
 		</select>
 		<update id="update" parameterType="recommendDto">
 			UPDATE COMMENTRECOMMEND SET RECOMMEND=#{recommend} WHERE MEMBERNO=#{memberno}
@@ -14,10 +14,10 @@
 			INSERT INTO COMMENTRECOMMEND VALUES(#{memberno},#{commentno},#{recommend})
 		</insert>
 		<select id="countGood" parameterType="recommendDto" resultType="int">
-			SELECT COUNT(*) FROM COMMENTRECOMMEND WHERE RECOMMEND=1
+			SELECT COUNT(*) FROM COMMENTRECOMMEND WHERE RECOMMEND=1 AND COMMENTNO=#{commentno}
 		</select>
 		<select id="countBad" parameterType="recommendDto" resultType="int">
-			SELECT COUNT(*) FROM COMMENTRECOMMEND WHERE RECOMMEND=-1
+			SELECT COUNT(*) FROM COMMENTRECOMMEND WHERE RECOMMEND=-1 AND COMMENTNO=#{commentno}
 		</select>
 		<update id="updategood" parameterType="recommendUpdateDto" >
 			UPDATE COMMENT SET COMMENTGOOD=#{count} WHERE COMMENTNO=#{commentno}
