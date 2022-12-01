@@ -36,14 +36,17 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public BoardDto selectOne(int boardno) {
 		BoardDto dto = null;
-		
+		int res = 0;
 		try {
-			dto = sqlSession.selectOne(NAMESPACE + "selectOne", boardno);
+			res = sqlSession.update(NAMESPACE+"pageview", boardno);
+			if(res>0) {
+				dto = sqlSession.selectOne("board.selectOne", boardno);
+			}
 		} catch (Exception e) {
 			System.out.println("[error] : select one");
 			e.printStackTrace();
 		}
-		return dto;
+		return dto; 
 	}
 
 	@Override
@@ -252,17 +255,4 @@ public class BoardDaoImpl implements BoardDao {
 		return res;
 	}
 
-	@Override
-	public int pageview(int memberno) {
-		int res = 0;
-		
-		try {
-			res = sqlSession.update(NAMESPACE+"pageview",memberno);
-		} catch (Exception e) {
-			System.out.println("[error] : pageview");
-			e.printStackTrace();
-		}
-		
-		return res;
-	}
 }

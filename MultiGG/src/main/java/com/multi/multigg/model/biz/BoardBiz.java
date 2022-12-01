@@ -22,7 +22,6 @@ public interface BoardBiz {
 	public BoardDto selectOne(int myno);
 	public int insert(BoardDto dto);
 	public int update(BoardDto dto);
-	public int pageview(int memeberno);
 	public int delete(int myno);
 	public String[] saveFile(String path, MultipartFile[] uploadFile);
 }

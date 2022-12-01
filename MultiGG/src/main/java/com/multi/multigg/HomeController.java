@@ -109,16 +109,17 @@ public class HomeController {
 		else {
 			return "redirect:boardupdateform.do?boardno="+dto.getBoardno();
 		}
-	}
-	
+	} 
+
+
 	@RequestMapping("/boarddetail.do")
 	public String boardDetail(Model model, int boardno) {
 		model.addAttribute("dto", biz.selectOne(boardno));
 		
-		BoardDto dto = biz.selectOne(boardno);
+		//BoardDto dto = biz.selectOne(boardno);
 		//뎃글 모여주기 기능
-		model.addAttribute("commentList",commentBiz.selectList(dto.getBoardno()));		
-
+		model.addAttribute("commentList",commentBiz.selectList(boardno));		
+		
 			
 		return "boarddetail";
 	}
