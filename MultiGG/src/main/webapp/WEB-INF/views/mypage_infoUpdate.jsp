@@ -116,7 +116,7 @@ height: 750px;
             </div>
             <div class="submit">
                 <input type="submit" value="수정 완료" >
-                <input type="button" id="cancelbtn" value="취소" onclick="location.href='index.jsp'">
+                <input type="button" id="cancelbtn" value="취소" onclick="location.href='lol.do?page=0'">
             </div>
         </div>
     </div>

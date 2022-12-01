@@ -40,7 +40,7 @@
             success:function(msg){
                console.log(msg);
                if(msg.check == true){
-            	   location.href="./index.jsp";
+            	   location.href="lol.do?page=0";
                }else{
             	   $("#loginChk").show();
             	   $("#loginChk").html("ID 혹은 PW가 잘못되었습니다").css("color","red");
@@ -84,7 +84,7 @@
                 <input type="button" value="로그인" onclick="login();">
             </div>
             <div class="login_sns">
-                <li><a href=""><i class="fab fa-google"></i></a></li>
+               
                 </div>
         <div id="register">MULTI.GG에 처음이세요? <a href="registerform.do">회원가입</a></div>
         </div>

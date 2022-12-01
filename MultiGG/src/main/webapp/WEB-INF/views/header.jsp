@@ -29,7 +29,7 @@
     <c:otherwise>
      <div id="loginBtn2" class="btns">
      <input type="button"  value="내정보" onclick="location.href='mypage.do'">
-     <input type="button" value="로그아웃" onclick="location.href='logout.do'">
+     <input type="button" value="로그아웃" onclick="location.href='lol.do?page=0'">
      </div>
     </c:otherwise>
 </c:choose>
