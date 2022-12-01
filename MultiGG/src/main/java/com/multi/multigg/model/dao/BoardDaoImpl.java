@@ -139,7 +139,7 @@ public class BoardDaoImpl implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try{
 			 list = sqlSession.selectList(NAMESPACE+"orderbyView", page*9);
-
+			 System.out.println(list);
 			} catch (Exception e) {
 			System.out.println("[error] : orderByView");
 			e.printStackTrace();
@@ -246,6 +246,20 @@ public class BoardDaoImpl implements BoardDao {
 			res = sqlSession.selectOne(NAMESPACE+"commentCnt", memberno);
 		} catch (Exception e) {
 			System.out.println("[error] : commentCnt");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int pageview(int memberno) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.update(NAMESPACE+"pageview",memberno);
+		} catch (Exception e) {
+			System.out.println("[error] : pageview");
 			e.printStackTrace();
 		}
 		

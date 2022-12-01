@@ -33,14 +33,12 @@
 		</select>
 		
 		<select id="orderbyView" parameterType="int" resultType="boardDto">
-			SELECET * FORM LOLBOARD ORDER BY BOARDVIEW DESC LIMIT #{page},9
+			SELECT * FROM LOLBOARD ORDER BY BOARDVIEW DESC LIMIT #{page},9
 		</select>
 		
 		<select id="orderbyLike" parameterType="int" resultType="boardDto">
-			SELECET * FORM LOLBOARD ORDER BY BOARDLIKE DESC LIMIT #{page},9
+			SELECT * FROM LOLBOARD ORDER BY BOARDLIKE DESC LIMIT #{page},9
 		</select>
-		
-		
 	
 		
 		<insert id="insert" parameterType="boardDto">
@@ -49,6 +47,12 @@
 		<update id="update" parameterType="boardDto">
 			UPDATE LOLBOARD SET BOARDTITLE=#{boardtitle}, BOARDCONTENT=#{boardcontent}, BOARDLIKE=#{boardlike}, BOARDMDFDATE=NOW() WHERE BOARDNO=#{boardno}
 		</update>
+	
+		<update id="pageview" parameterType="int">
+			UPDATE LOLBOARD SET BOARDVIEW = BOARDVIEW + 1 WHERE BOARDNO=#{boardno}
+		</update>
+		
+		
 		<delete id="delete" parameterType="int">
 			DELETE FROM LOLBOARD WHERE BOARDNO=#{boardno}
 		</delete>

@@ -91,4 +91,9 @@ public class BoardBizImpl implements BoardBiz {
 		return dao.commentCnt(memberno);
 	}
 
+	@Override
+	public int pageview(int memeberno) {
+		return dao.pageview(memeberno);
+	}
+
 }

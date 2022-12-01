@@ -117,12 +117,13 @@ public class HomeController {
 		
 		BoardDto dto = biz.selectOne(boardno);
 		//뎃글 모여주기 기능
-		model.addAttribute("commentList",commentBiz.selectList(dto.getBoardno()));
-		
+		model.addAttribute("commentList",commentBiz.selectList(dto.getBoardno()));		
 
-				
+			
 		return "boarddetail";
 	}
+
+	
 	
 	@RequestMapping("/boarddelete.do")
 	public String boardDelete(int boardno) {

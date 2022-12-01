@@ -25,6 +25,7 @@ public interface BoardDao {
 	public BoardDto selectOne(int myno);
 	public int insert(BoardDto dto);
 	public int update(BoardDto dto);
+	public int pageview(int memberno);
 	public int delete(int myno);
 	public String[] saveFile(String path, MultipartFile[] uploadFile);
 }
