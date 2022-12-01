@@ -21,7 +21,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -74,7 +76,13 @@ public class HomeController {
 		if(session.getAttribute("login") != null) {
 			MemberDto login = (MemberDto) session.getAttribute("login");
 			model.addAttribute("contentCnt", biz.contentCnt(login.getMemberno()));
-			model.addAttribute("commentCnt", biz.commentCnt(login.getMemberno()));
+			model.addAttribute("commentCnt", biz.memberCommentCnt(login.getMemberno()));
+		}
+		ArrayList<BoardDto> dtoList = (ArrayList<BoardDto>) model.getAttribute("list");
+		if(dtoList != null) {
+			for(int i=0; i<dtoList.size(); i++) {
+				dtoList.get(i).setCommentCnt(biz.boardCommentCnt(dtoList.get(i).getBoardno()));
+			}
 		}
 		return "lol";
 	}
@@ -264,6 +272,10 @@ public class HomeController {
 			}
 			bufferedReader.close();
 
+			JSONParser parser = new JSONParser();
+			JSONObject json = (JSONObject) parser.parse(stringBuffer.toString());
+			System.out.println(json.get("puuid"));
+			
 			System.out.println(stringBuffer.toString());
 			
 		} catch (MalformedURLException e) {

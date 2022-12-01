@@ -16,8 +16,11 @@
 		<select id="contentCnt" parameterType="int" resultType="int">
 			SELECT COUNT(BOARDNO) FROM LOLBOARD WHERE MEMBERNO = #{memberno}
 		</select>
-		<select id="commentCnt" parameterType="int" resultType="int">
+		<select id="memberCommentCnt" parameterType="int" resultType="int">
 			SELECT COUNT(MEMBERNO) FROM COMMENT WHERE MEMBERNO = #{memberno}
+		</select>
+		<select id="boardCommentCnt" parameterType="int" resultType="int">
+			SELECT COUNT(COMMENTNO) FROM COMMENT WHERE BOARDNO = #{boardno}
 		</select>
 		<select id="likeCnt" parameterType="int" resultType="int">
 			SELECT COUNT(MEMBERNO) FROM LOLBOARD_LIKE WHERE BOARDNO = #{boardno}
