@@ -8,6 +8,13 @@ public interface MemberDao {
 	public MemberDto login(MemberDto dto);
 	public int insert(MemberDto dto);
 	public int idCheck(String memberemail);
+	public int nickCheck(String membernickname);
+	
 	public String pwCheck(String memberemail);
-	public void pwUpdate(String memberemail, String hashedPw);
+	
+	public void modifyPw(MemberDto dto);
+	
+	public MemberDto getMemberemail(String memberemail);
+	
+	public void infoUpdate(MemberDto dto);
 }

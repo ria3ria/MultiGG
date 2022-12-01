@@ -56,16 +56,38 @@ public class MemberDaoImpl implements MemberDao {
 		return res;
 	}
 	@Override
+	public int nickCheck(String membernickname) {
+		int res = 0;
+		try {
+			res = sqlSession.selectOne(NAMESPACE+"nickCheck", membernickname);	
+		} catch (Exception e) {
+			System.out.println("[error] : member nickCheck");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	@Override
 	public String pwCheck(String memberemail){
 		return sqlSession.selectOne(NAMESPACE+"pwCheck", memberemail);
 	}
 	
 	@Override
-	public void pwUpdate(String memberemail, String hashedPw){
-		Map<String,Object> map = new HashMap<String, Object>();
-		map.put("memberemail", memberemail);
-		map.put("memberPw", hashedPw);
-		sqlSession.update(NAMESPACE+"pwUpdate", map);
+	public void modifyPw(MemberDto dto){
+		
+	  sqlSession.update(NAMESPACE+"modifyPw",dto);
+		
+	}
+
+	@Override
+	public MemberDto getMemberemail(String memberemail) {
+		
+		return sqlSession.selectOne(NAMESPACE+"getMemberemail", memberemail);
+	}
+
+	@Override
+	public void infoUpdate(MemberDto dto) {
+		sqlSession.update(NAMESPACE+"infoUpdate",dto);
 		
 	}
 }

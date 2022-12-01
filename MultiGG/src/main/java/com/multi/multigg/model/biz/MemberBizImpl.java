@@ -1,6 +1,7 @@
 package com.multi.multigg.model.biz;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.multi.multigg.model.dao.MemberDao;
@@ -27,12 +28,28 @@ public class MemberBizImpl implements MemberBiz {
 		return dao.idCheck(memberemail);
 	}
 	@Override
+	public int nickCheck(String membernickname) {
+		return dao.nickCheck(membernickname);
+	}
+	@Override
 	public String pwCheck(String memberemail){
 		return dao.pwCheck(memberemail);
 	}
 	
 	@Override
-	public void pwUpdate(String memberemail, String hashedPw){
-		dao.pwUpdate(memberemail, hashedPw);
+	public void modifyPw(MemberDto dto){
+		dao.modifyPw(dto);
+	}
+
+	@Override
+	public MemberDto getMemberemail(String memberemail) {
+		
+		return dao.getMemberemail(memberemail);
+	}
+
+	@Override
+	public void infoUpdate(MemberDto dto) {
+		dao.infoUpdate(dto);
+		
 	}
 }

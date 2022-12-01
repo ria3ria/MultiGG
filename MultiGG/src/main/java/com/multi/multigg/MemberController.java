@@ -1,7 +1,6 @@
 package com.multi.multigg;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.multi.multigg.model.biz.MemberBiz;
 import com.multi.multigg.model.dto.MemberDto;
@@ -29,7 +27,7 @@ import com.multi.multigg.model.dto.MemberDto;
 @Controller
 public class MemberController {
 private Logger logger = LoggerFactory.getLogger(MemberController.class);
-	
+
 	@Autowired
 	private MemberBiz biz;
 	
@@ -91,10 +89,34 @@ private Logger logger = LoggerFactory.getLogger(MemberController.class);
 		res= biz.idCheck(memberemail);
 		
 		return res;
+	}
+	@PostMapping("/nickChk.do")
+	@ResponseBody
+	public int nickCheck(@RequestParam("membernickname") String membernickname) {
+		int res = 0;
 		
+		res= biz.nickCheck(membernickname);
 		
+		return res;
+	}
+	
+	@PostMapping("/nickUpdateChk.do")
+	@ResponseBody
+	public String nickUpdateCheck(@RequestParam("membernickname") String membernickname, HttpSession session) {
+		String res;
+		int intres = 0;
+		intres= biz.nickCheck(membernickname);
+		MemberDto DBdto = (MemberDto) session.getAttribute("login");
+		if(DBdto.getMembernickname().equals(membernickname)) {
+			res = "nickConfirmSame";
+		}else if(intres == 1){
+			res ="nickConfirmNo";
+		}else {
+			res ="nickConfirmOk";
+		}
 		
-		
+		logger.info(res);
+		return res;
 	}
 	
 	
@@ -122,32 +144,66 @@ private Logger logger = LoggerFactory.getLogger(MemberController.class);
 		return "mypage";
 		
 	}
-	@RequestMapping("/mypageupdate.do")
+	@RequestMapping("/mypageInfoUpdateForm.do")
 	public String memberUpdate() {
 		
-		return "mypageUpdate";
+		return "mypage_infoUpdate";
 		
 	}
+	@RequestMapping("/mypageInfoUpdate.do")
+	public String infoUpdate(MemberDto dto, HttpSession session) {
+		biz.infoUpdate(dto);
+		
+		session.invalidate();
+		
+		return "login";
+		
+	}
+	@RequestMapping("/modifyPwForm.do")
+	public String memberPwUpDate() {
+		return"mypage_modifyPw";
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/checkpw.do")
+	public String checkpw(@RequestBody String memberpw, HttpSession session) throws Exception{
+		logger.info("비밀번호 확인 요청 발생");
+		String res = null;
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		MemberDto DBdto = (MemberDto) session.getAttribute("login");
+		logger.info("db 비밀번호: " + DBdto.getMemberpw());
+		logger.info("폼 비밀번호: " + memberpw);
+		if(encoder.matches(memberpw, DBdto.getMemberpw())) {
+			res="pwok";
+			
+		}else {
+			res="pwno";
+		}
+		logger.info("요청끝");
+		logger.info(res);
+		
+		return res;
+	}
 
-//	@RequestMapping(value="/pwCheck" , method=RequestMethod.POST)
-//	@ResponseBody
-//	public int pwCheck(MemberDto dto) throws Exception{
-//		String memberpw = biz.pwCheck(dto.getMemberemail());
-//		if( dto == null || !BCrypt.checkpw(dto.getMemberpw(), memberpw)) {
-//			return 0;
-//		}
-//		return 1;
-//	}
-//	
-//	@RequestMapping(value="/pwUpdate" , method=RequestMethod.POST)
-//	public String pwUpdate(String memberemail,String memberPw1,RedirectAttributes rttr,HttpSession session)throws Exception{
-//		String hashedPw = BCrypt.hashpw(memberPw1, BCrypt.gensalt());
-//		biz.pwUpdate(memberemail, hashedPw);
-//		session.invalidate();
-//		rttr.addFlashAttribute("msg", "정보 수정이 완료되었습니다. 다시 로그인해주세요.");
-//		
-//		return "login";
-//	}
-//	
+	@ResponseBody
+	@PostMapping("/modifyPw.do")
+	public String pwUpdate(@RequestBody MemberDto dto,HttpSession session)throws Exception{
+		logger.info("비밀번호 변경 요청 발생");
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String securePw = encoder.encode(dto.getMemberpw());
+		dto.setMemberpw(securePw);
+		biz.modifyPw(dto);
+		MemberDto modifyDto = new MemberDto();
+		modifyDto.setMemberemail(dto.getMemberemail());
+		
+		MemberDto res = biz.login(modifyDto);
+		
+		logger.info("회원정보 불러오기: " + res);
+		session.setAttribute("login", res);
+		
+		return "changeSuccess";
+		
+	}
 	
 }
