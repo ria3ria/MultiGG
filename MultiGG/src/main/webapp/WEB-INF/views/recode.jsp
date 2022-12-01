@@ -43,6 +43,7 @@ $(function(){
 
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/header.jsp" %>
 	<div class="craw_submit">
 	     <input type="text" id="craw_id" name="craw_id" class="form-control" placeholder="ID 입력" style="width:300px;"/>
 	     <input type="button" id="craw_submit" value="조회">

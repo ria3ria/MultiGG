@@ -9,6 +9,7 @@
 }
 #head{
     width: 33%;
+    cursor: pointer;
 }
 #loginBtn input{
     margin-left: 5px;

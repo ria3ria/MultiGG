@@ -53,11 +53,6 @@ public class HomeController {
 	@Autowired
 	private CommentBiz commentBiz;
 	
-	@RequestMapping("/main.do")
-	public String main() {
-		return "main";
-	}
-	
 	@RequestMapping("/lol.do")
 	public String lol(HttpSession session, Model model, int page, String keyword, String order, String boardkategorie) {
 		if(keyword != null && !keyword.isBlank()) {

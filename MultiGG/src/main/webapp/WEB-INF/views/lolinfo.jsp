@@ -8,6 +8,7 @@
 
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/header.jsp" %>
 <div>
 	${dto.title}
 	${dto.headcontent}
