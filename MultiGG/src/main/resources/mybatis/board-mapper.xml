@@ -59,4 +59,8 @@
 		<delete id="delete" parameterType="int">
 			DELETE FROM LOLBOARD WHERE BOARDNO=#{boardno}
 		</delete>
+		<delete id="deletecomment" parameterType="int">
+			DELETE FROM COMMENT WHERE BOARDNO=#{boardno}
+		</delete>
+		
 </mapper>

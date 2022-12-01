@@ -23,10 +23,10 @@
 		$("#commentwrite").attr("style","display:table")
 	}
 	
-	function commentUpdateForm(){
-		$("#commentupdateform").attr("style","display: none");
-		$("#commenttitle").removeAttr("readonly");
-		$("#commentupdate").attr("style","display: true");
+	function commentUpdateForm(commentno){
+		$("#commentupdateform"+commentno).attr("style","display: none");
+		$("#commenttitle"+commentno).removeAttr("readonly");
+		$("#commentupdate"+commentno).attr("style","display: true");
 	}
 	
 	
@@ -91,7 +91,7 @@
 								<tr>
 									<td>${commentdto.commentno}</td>
 									<td>${commentdto.commentwriter }</td>
-									<td><textarea id="commenttitle"rows="5" cols="100" readonly="readonly" name="commenttitle">${commentdto.commenttitle }</textarea></td>
+									<td><textarea id="commenttitle${commentdto.commentno }"rows="5" cols="100" readonly="readonly" name="commenttitle">${commentdto.commenttitle }</textarea></td>
 									<td>${commentdto.commentdate }</td>
 									<td>${commentdto.commentgood }<input type="button" value="추천" onclick="location.href='commentrecommend.do?memberno=${login.memberno}&commentno=${commentdto.commentno}&recommend=1&boardno=${dto.boardno }'"></td>
 									<td>${commentdto.commentbad }<input type="button" value="비추천" onclick="location.href='commentrecommend.do?memberno=${login.memberno}&commentno=${commentdto.commentno}&recommend=-1&boardno=${dto.boardno }'"></td>
@@ -100,8 +100,8 @@
 								<tr>
 									<th colspan="6" align="right">
 										<c:if test="${login.memberno == commentdto.memberno }">
-											<input id="commentupdateform" type="button" value="수정" style="display: true" onclick="commentUpdateForm();">
-											<input id="commentupdate" type="submit" value="수정 완료" style="display: none" >
+											<input id="commentupdateform${commentdto.commentno }" type="button" value="수정" style="display: true" onclick="commentUpdateForm(${commentdto.commentno });">
+											<input id="commentupdate${commentdto.commentno }" type="submit" value="수정 완료" style="display: none" >
 											<input type="button" value="삭제" onclick="location.href='commentdelete.do?commentno=${commentdto.commentno}&boardno=${dto.boardno }&memberno=${login.memberno }'">
 										</c:if>
 									</th>
