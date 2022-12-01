@@ -40,7 +40,10 @@ function fn_nickCheck(){
         
     });
     };
-
+var msg = '${msg}';
+if (msg === 'ok'){
+	alert("수정이 완료되었습니다.");
+}
 </script>
 <style>
 .nick_ok,
