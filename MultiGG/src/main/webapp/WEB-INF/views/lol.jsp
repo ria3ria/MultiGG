@@ -68,7 +68,7 @@
 	<div id="screen">
         <%@ include file="/WEB-INF/views/header.jsp" %>
         <div id="userInfo">
-        	<p>내 정보</p>
+        	<b>내 정보</b>
         	<c:choose>
 				<c:when test="${empty login }">
 					<input type="button" value="로그인" onclick="location.href='loginform.do'">
@@ -85,66 +85,81 @@
         </div>
         <div id="board_body">
             <div id="board_top">
-                <input type="button" value="글쓰기" onclick="location.href='boardwriteform.do'">
-                
-                <form action="lol.do">
-                <select name="order">
-                <option value="like">추천순</option>
-	 			<option value="view">조회순</option>
-	 			</select>
-                <input type="hidden" name=page value="0">
-                <input type="submit" value="정렬">
-                </form>
-				
-				<input type="text" id="keyword" placeholder="검색어 입력">
-				<input type="button" value="글검색" onclick="search();">
-				<br>
-				<input type="button" value="다음 페이지로" onclick="nextPage();">
-				<input type="button" value="이전 페이지로" onclick="prevPage();">
+            	<div id="menu_top">
+					<input type="text" id="keyword" placeholder="검색어 입력">
+					<input type="button" value="글검색" onclick="search();" style="border-radius: 0 0 50px 0;">
+	                <form action="lol.do">
+		                <select name="order">
+			                <option value="like">추천순</option>
+				 			<option value="view">조회순</option>
+			 			</select>
+		                <input type="hidden" name=page value="0">
+		                <input type="submit" value="정렬" style="border-radius: 50px 0 0 0;">
+	                </form>
+            	</div>
+            	<div id="menu_bottom">
+					<input type="button" value="글쓰기" onclick="location.href='boardwriteform.do'" style="float: left;">
+					<input type="button" value="이전 페이지로" onclick="prevPage();" style="float: right;">
+					<input type="button" value="다음 페이지로" onclick="nextPage();" style="float: right; border-radius: 50px 0 0 0;">
+            	</div>
             </div>
             <div id="board_bottom">
                 <div id="board_list_area">
                     <ul>
                         <li>
-                            <p class="boardno">번호</p>
-                            <p class="boardkategorie">카테고리</p>
-                            <p class="boardtitle">제목</p>
-                            <p class="boardname">작성자</p>
-                            <p class="boarddate">작성일</p>
-                            <p class="boardview">조회수</p>
-                            <p class="boardlike">추천</p>
+                            <b class="boardno">번호</b>
+                            <b class="boardkategorie">카테고리</b>
+                            <b class="boardtitle" style="cursor: default; pointer-events: none;">제목</b>
+                            <b class="boardname">작성자</b>
+                            <b class="boarddate">작성일</b>
+                            <b class="boardview">조회수</b>
+                            <b class="boardlike">추천</b>
                         </li>
 						<c:choose>
 							<c:when test="${empty list }">
 								<li>
-									<p class="boardno">-</p>
-									<p class="boardkategorie">-</p>
-									<p class="boardtitle">작성된 글이 없습니다...</p>
-									<p class="boardname">-</p>
-									<p class="boarddate">-</p>
-									<p class="boardview">-</p>
-									<p class="boardlike">-</p>
+									<b class="boardno">-</b>
+									<b class="boardkategorie">-</b>
+									<b class="boardtitle">작성된 글이 없습니다...</b>
+									<b class="boardname">-</b>
+									<b class="boarddate">-</b>
+									<b class="boardview">-</b>
+									<b class="boardlike">-</b>
 								</li>
 							</c:when>
 							<c:otherwise>
 								<c:forEach items="${list }" var="dto">
 									<li>
-			                            <p class="boardno">${dto.boardno }</p>
-			                            <p class="boardkategorie">${dto.boardkategorie }</p>
+			                            <b class="boardno">${dto.boardno }</b>
+			                            <b class="boardkategorie">${dto.boardkategorie }</b>
 		                            	<c:set var = "content" value = "${dto.boardcontent }"></c:set>
 			                            <c:choose>
 			                            	<c:when test="${fn:contains(content, '<img src=')}">
-					                            <p class="boardtitle"><a href="boarddetail.do?boardno=${dto.boardno }">${dto.boardtitle }(사진)[${dto.commentCnt }]</a></p>
+			                            		<c:choose>
+					                            	<c:when test="${dto.commentCnt > 0}">
+							                            <b class="boardtitle" onclick="location.href='boarddetail.do?boardno=${dto.boardno }'">${dto.boardtitle }(사진)[${dto.commentCnt }]</b>
+					                            	</c:when>
+					                            	<c:otherwise>
+							                            <b class="boardtitle" onclick="location.href='boarddetail.do?boardno=${dto.boardno }'">${dto.boardtitle }(사진)</b>
+					                            	</c:otherwise>
+												</c:choose>
 			                            	</c:when>
 			                            	<c:otherwise>
-					                            <p class="boardtitle"><a href="boarddetail.do?boardno=${dto.boardno }">${dto.boardtitle }[${dto.commentCnt }]</a></p>
+			                            		<c:choose>
+					                            	<c:when test="${dto.commentCnt > 0}">
+							                            <b class="boardtitle" onclick="location.href='boarddetail.do?boardno=${dto.boardno }'">${dto.boardtitle }[${dto.commentCnt }]</b>
+					                            	</c:when>
+					                            	<c:otherwise>
+							                            <b class="boardtitle" onclick="location.href='boarddetail.do?boardno=${dto.boardno }'">${dto.boardtitle }</b>
+					                            	</c:otherwise>
+												</c:choose>
 			                            	</c:otherwise>
 			                            </c:choose>
-			                            <p class="boardname">${dto.boardname }</p>
+			                            <b class="boardname">${dto.boardname }</b>
 			                            <fmt:formatDate var="date" value="${dto.boarddate }" pattern="yy/MM/dd"/>
-			                            <p class="boarddate">${date }</p>
-			                            <p class="boardview">${dto.boardview }</p>
-			                            <p class="boardlike">${dto.boardlike }</p>
+			                            <b class="boarddate">${date }</b>
+			                            <b class="boardview">${dto.boardview }</b>
+			                            <b class="boardlike">${dto.boardlike }</b>
 									</li>
 								</c:forEach>
 							</c:otherwise>
@@ -154,14 +169,14 @@
             </div>
         </div>
         <div id="kategorie">
-        	<p>카테고리</p>
-			<a href='lol.do?page=0'>전체보기</a><br>
-			<a href='lol.do?page=0&boardkategorie=유머'>유머</a><br>
-			<a href='lol.do?page=0&boardkategorie=질문'>질문</a><br>
+        	<b>카테고리</b>
+        	<b onclick="location.href='lol.do?page=0'">전체보기</b>
+        	<b onclick="location.href='lol.do?page=0&boardkategorie=유머'">유머</b>
+        	<b onclick="location.href='lol.do?page=0&boardkategorie=질문'">질문</b>
 			<br><br>
-			<p>정보</p>
-			<a href='lolinfo.do'>패치노트</a><br>
-			<a href='recode.do'>전적검색</a>
+			<b>정보</b>
+        	<b onclick="location.href='lolinfo.do'">패치노트</b>
+        	<b onclick="location.href='recode.do'">전적검색</b>
         </div>
     </div>
 </html>
