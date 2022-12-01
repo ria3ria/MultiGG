@@ -18,7 +18,7 @@
 </head>
 <body>
     <div id="headers">
-<div id="head">MULTI.GG</div>
+<div id="head" onclick="location.href='lol.do?page=0'">MULTI.GG</div>
  
 <c:choose>
     <c:when test="${sessionScope.login eq null}">

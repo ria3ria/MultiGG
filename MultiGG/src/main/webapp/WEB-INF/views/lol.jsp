@@ -15,6 +15,10 @@
 	let paramObj;
 	$(function() {
 		paramObj = get_query();
+		$("#headers").css("height", "10%");
+		if(paramObj['page'] == null || paramObj['page'] == "") {
+			location.href = 'lol.do?page=0';
+		}
 	});
 	function nextPage() {
 		let url = "lol.do?";
@@ -37,6 +41,12 @@
 		if(paramObj['boardkategorie'] != null && paramObj['boardkategorie'] != "") {
 			url += '&boardkategorie=' + paramObj['boardkategorie'];
 		}
+		if(paramObj['view'] != null && paramObj['view'] != "") {
+			url += '&view=' + paramObj['view'];
+		}
+		if(paramObj['like'] != null && paramObj['like'] != "") {
+			url += '&like=' + paramObj['like'];
+		}
 		return url;
 	}
 	function get_query() {
@@ -55,7 +65,7 @@
 </head>
 <body>
 	<div id="screen">
-        <div id="header">header</div>
+        <%@ include file="/WEB-INF/views/header.jsp" %>
         <div id="userInfo">
         	<p>내 정보</p>
         	<c:choose>
@@ -134,9 +144,14 @@
             </div>
         </div>
         <div id="kategorie">
+        	<p>카테고리</p>
 			<a href='lol.do?page=0'>전체보기</a><br>
 			<a href='lol.do?page=0&boardkategorie=유머'>유머</a><br>
-			<a href='lol.do?page=0&boardkategorie=질문'>질문</a>
+			<a href='lol.do?page=0&boardkategorie=질문'>질문</a><br>
+			<br><br>
+			<p>정보</p>
+			<a href='lolinfo.do'>패치노트</a><br>
+			<a href='recode.do'>전적검색</a>
         </div>
     </div>
 </html>
