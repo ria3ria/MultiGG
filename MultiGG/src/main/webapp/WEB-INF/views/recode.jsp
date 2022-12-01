@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,12 +43,12 @@ $(function(){
 
 </head>
 <body>
-<div class="craw_submit">
-     <input type="text" id="craw_id" name="craw_id" class="form-control" placeholder="ID 입력" style="width:300px;"/>
-     <input type="button" id="craw_submit" value="조회">
-</div>
-
- <div class="content_craw"></div>
+	<div class="craw_submit">
+	     <input type="text" id="craw_id" name="craw_id" class="form-control" placeholder="ID 입력" style="width:300px;"/>
+	     <input type="button" id="craw_submit" value="조회">
+	</div>
+	
+	<div class="content_craw"></div>
 
 </body>
 </html>
