@@ -57,7 +57,7 @@ public class CommentDaoImpl implements CommentDao{
 	}
 
 	@Override
-	public int delete(int commentno) {
+	public int delete(int commentno,int memberno) {
 		int res = 0;
 		
 		try {

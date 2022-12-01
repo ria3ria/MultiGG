@@ -31,9 +31,9 @@ public class CommentBizImpl implements CommentBiz{
 	}
 
 	@Override
-	public int delete(int commentno) {
+	public int delete(int commentno, int memberno) {
 		
-		return dao.delete(commentno);
+		return dao.delete(commentno,memberno);
 	}
 
 }
