@@ -55,6 +55,11 @@ select {
     float:left;
     border-bottom: dashed white;
 }
+#userInfo b:nth-child(2), #userInfo b:nth-child(3) {
+	width: 60%;
+	height: 15%;
+	font-size: 0.8em;
+}
 #userInfo input {
 	width: 50%;
 	height: 20%;
@@ -72,7 +77,7 @@ select {
 	margin-top: 10%;
 	border-top: solid white;
 	border-bottom: solid white;
-	line-height: 200%;
+	line-height: 215%;
 }
 #kategorie{
     width:15%;
