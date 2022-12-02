@@ -41,11 +41,8 @@
 		if(paramObj['boardkategorie'] != null && paramObj['boardkategorie'] != "") {
 			url += '&boardkategorie=' + paramObj['boardkategorie'];
 		}
-		if(paramObj['view'] != null && paramObj['view'] != "") {
-			url += '&view=' + paramObj['view'];
-		}
-		if(paramObj['like'] != null && paramObj['like'] != "") {
-			url += '&like=' + paramObj['like'];
+		if(paramObj['order'] != null && paramObj['order'] != "") {
+			url += '&order=' + paramObj['order'];
 		}
 		return url;
 	}
