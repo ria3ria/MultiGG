@@ -152,9 +152,9 @@ private Logger logger = LoggerFactory.getLogger(MemberController.class);
 		
 	}
 	@RequestMapping("/mypageInfoUpdate.do")
-	public String infoUpdate(MemberDto dto, RedirectAttributes rttr) {
+	public String infoUpdate(MemberDto dto, HttpSession session) {
 		biz.infoUpdate(dto);
-		rttr.addFlashAttribute("msg", "ok");
+		session.invalidate();
 		return "redirect:lol.do?page=0";
 		
 	}
