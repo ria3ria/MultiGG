@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.multi.multigg.model.biz.MemberBiz;
 import com.multi.multigg.model.dto.MemberDto;
@@ -79,7 +80,7 @@ private Logger logger = LoggerFactory.getLogger(MemberController.class);
 	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) throws IOException {
 		session.invalidate();	
-		return "login";
+		return "redirect:lol.do?page=0";
 	}
 	
 	@PostMapping("/idChk.do")
@@ -151,12 +152,10 @@ private Logger logger = LoggerFactory.getLogger(MemberController.class);
 		
 	}
 	@RequestMapping("/mypageInfoUpdate.do")
-	public String infoUpdate(MemberDto dto, HttpSession session) {
+	public String infoUpdate(MemberDto dto, RedirectAttributes rttr) {
 		biz.infoUpdate(dto);
-		
-		session.invalidate();
-		
-		return "login";
+		rttr.addFlashAttribute("msg", "ok");
+		return "redirect:lol.do?page=0";
 		
 	}
 	@RequestMapping("/modifyPwForm.do")

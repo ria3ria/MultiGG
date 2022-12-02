@@ -52,7 +52,7 @@ height: 750px;
                 <input type="button" value="비밀번호 변경"onclick="location.href='modifyPwForm.do'" >
                 </div>
                 <div class="cancelBtn">
-                <input type="button" value="취소" onclick="location.href='index.jsp'">
+                <input type="button" value="뒤로가기" onclick="location.href='lol.do?page=0'">
                 </div>
             </div>
         </div>

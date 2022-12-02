@@ -84,7 +84,7 @@
                 <input type="button" value="로그인" onclick="login();">
             </div>
             <div class="login_sns">
-                <li><a href=""><i class="fab fa-google"></i></a></li>
+               
                 </div>
         <div id="register">MULTI.GG에 처음이세요? <a href="registerform.do">회원가입</a></div>
         </div>
